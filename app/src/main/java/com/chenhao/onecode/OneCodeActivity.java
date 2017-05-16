@@ -1,8 +1,18 @@
 package com.chenhao.onecode;
 
 import android.os.Bundle;
-
-import chenhao.lib.onecode.base.BaseActivity;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.List;
+import butterknife.Bind;
+import chenhao.lib.onecode.base.BaseViewHolder;
+import chenhao.lib.onecode.base.RefreshBaseActivity;
+import chenhao.lib.onecode.image.AlbumListActivity;
+import chenhao.lib.onecode.image.GetPhotoInfo;
+import chenhao.lib.onecode.utils.LayoutManagerUtil;
+import chenhao.lib.onecode.video.VideoListActivity;
 
 /**
  * 所属项目：OneCode
@@ -13,21 +23,79 @@ import chenhao.lib.onecode.base.BaseActivity;
  * 描述：OneCodeActivity
  */
 
-public class OneCodeActivity extends BaseActivity{
+public class OneCodeActivity extends RefreshBaseActivity<String>{
+
+    @Override
+    public RecyclerView.LayoutManager getLayoutManager() {
+        return LayoutManagerUtil.getList(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.app_activity_onecode);
+        loadData(false,false);
+    }
+
+    @Override
+    public void loadData(boolean getMore, boolean isUser) {
+        super.loadData(getMore, isUser);
+        getRefreshView().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                List<String> data=new ArrayList<String>();
+                data.add("选照片");
+                data.add("选视频");
+                data.add("Item3");
+                data.add("Item4");
+                data.add("Item5");
+                data.add("Item6");
+                data.add("Item7");
+                data.add("Item8");
+                data.add("Item9");
+                onDataSuccess(data,SYSTEM_STATUS_NULL_DATA,false);
+            }
+        },3000);
+    }
+
+    @Override
+    protected BaseViewHolder<String> getItem(int viewType) {
+        return new ItemTest();
+    }
+
+    public class ItemTest extends BaseViewHolder<String>{
+
+        @Bind(R.id.test_item)
+        TextView item;
+
+        private int index;
+
+        public ItemTest() {
+            super(View.inflate(OneCodeActivity.this, R.layout.app_item_test,null));
+            itemView.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,RecyclerView.LayoutParams.WRAP_CONTENT));
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (index){
+                        case 0:
+                            AlbumListActivity.goGetPhoto(OneCodeActivity.this, GetPhotoInfo.getDefualtInfo());
+                            break;
+                        case 1:
+                            VideoListActivity.get(OneCodeActivity.this);
+                            break;
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void initView(String s, int position) {
+            this.index=position;
+            item.setText(s);
+        }
     }
 
     @Override
     public String getPageName() {
-        return null;
-    }
-
-    @Override
-    protected void reLoad(int status) {
-
+        return "onecode";
     }
 }
