@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="main_red">#CC0000</color>
+    <color name="main_bg">#eeeeee</color>
+    <color name="main_bg_aa">#aaeeeeee</color>
+    <color name="status_bg">#eeeeee</color>
+    <color name="title_bg_color">#ffda44</color>
+    <color name="title_bg_color_refresh">#ffda44</color>
+    <color name="title_text_color">#eeffffff</color>
+    <color name="title_bg_color_aa">#aaffda44</color>
+    <color name="main_show_color">#ffda44</color>
+    <color name="main_show_color_aa">#aaffda44</color>
+    <color name="main_show_color_99">#99ffda44</color>
+    <color name="main_show_color_33">#33ffda44</color>
+    <color name="main_txt">#333333</color>
+    <color name="white_press">#fcfcfc</color>
+
+</resources>

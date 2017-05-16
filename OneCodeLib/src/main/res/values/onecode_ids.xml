@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="system_status" type="id" />
+    <item name="refresh_view" type="id" />
+    <item name="refresh_view_layout" type="id" />
+    <item name="sreach_edit" type="id" />
+    <item name="title_view" type="id" />
+    <item name="title_left" type="id" />
+    <item name="title_left_unread" type="id" />
+    <item name="title_right" type="id" />
+    <item name="title_right_unread" type="id" />
+    <item name="title_back" type="id" />
+    <item name="title_search" type="id" />
+    <item name="title_edit" type="id" />
+    <item name="title_more" type="id" />
+    <item name="title_add" type="id" />
+    <item name="title_text" type="id" />
+    <item name="title_share" type="id" />
+    <item name="title_favorite" type="id" />
+    <item name="title_line" type="id" />
+    <item name="comm_submit" type="id" />
+    <item name="comm_cancel" type="id" />
+    <item name="item_video_get_thumb" type="id" />
+    <item name="item_video_get_name" type="id" />
+    <item name="item_image_bucket_image" type="id" />
+    <item name="item_image_bucket_name" type="id" />
+    <item name="item_image_list_image" type="id" />
+    <item name="item_image_list_select" type="id" />
+    <item name="selected_view" type="id" />
+
+</resources>

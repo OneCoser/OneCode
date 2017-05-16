@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="OneCodeRefreshView">
+        <attr name="avlv_color" format="color" />
+        <attr name="avlv_style" format="integer" >
+            <enum name="BallPulse" value="0" />
+            <enum name="BallGridPulse" value="1" />
+            <enum name="BallClipRotate" value="2" />
+            <enum name="BallClipRotatePulse" value="3" />
+            <enum name="SquareSpin" value="4" />
+            <enum name="BallClipRotateMultiple" value="5" />
+            <enum name="BallPulseRise" value="6" />
+            <enum name="BallRotate" value="7" />
+            <enum name="CubeTransition" value="8" />
+            <enum name="BallZigZag" value="9" />
+            <enum name="BallZigZagDeflect" value="10" />
+            <enum name="BallTrianglePath" value="11" />
+            <enum name="BallScale" value="12" />
+            <enum name="LineScale" value="13" />
+            <enum name="LineScaleParty" value="14" />
+            <enum name="BallScaleMultiple" value="15" />
+            <enum name="BallPulseSync" value="16" />
+            <enum name="BallBeat" value="17" />
+            <enum name="LineScalePulseOut" value="18" />
+            <enum name="LineScalePulseOutRapid" value="19" />
+            <enum name="BallScaleRipple" value="20" />
+            <enum name="BallScaleRippleMultiple" value="21" />
+            <enum name="BallSpinFadeLoader" value="22" />
+            <enum name="LineSpinFadeLoader" value="23" />
+            <enum name="TriangleSkewSpin" value="24" />
+            <enum name="Pacman" value="25" />
+            <enum name="BallGridBeat" value="26" />
+            <enum name="SemiCircleSpin" value="27" />
+        </attr>
+
+        <attr name="ptrv_icon_down" format="reference" />
+        <attr name="ptrv_icon_up" format="reference" />
+
+        <attr name="lmfv_txt_noMore" format="string" />
+        <attr name="lmfv_txtColor_noMore" format="color" />
+
+    </declare-styleable>
+
+    <declare-styleable name="RulerView">
+        <attr name="ruler_start" format="integer" />
+        <attr name="ruler_end" format="integer" />
+        <attr name="ruler_section" format="integer" />
+        <attr name="ruler_point_count" format="integer" />
+        <attr name="ruler_color" format="color" />
+        <attr name="ruler_item_height" format="dimension" />
+        <attr name="ruler_item_space" format="dimension" />
+        <attr name="ruler_pointer_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="MagicProgressCircle">
+        <attr name="mpc_percent" format="float" />
+        <attr name="mpc_stroke_width" format="dimension" />
+        <attr name="mpc_start_color" format="color" />
+        <attr name="mpc_end_color" format="color" />
+        <attr name="mpc_default_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="CircularProgressBar">
+        <attr name="cpb_progress" format="float" />
+        <attr name="cpb_progressbar_width" format="dimension" />
+        <attr name="cpb_background_progressbar_width" format="dimension" />
+        <attr name="cpb_progressbar_color" format="color" />
+        <attr name="cpb_background_progressbar_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="DanmakuView">
+        <attr name="max_row" format="integer" />
+        <attr name="pick_interval" format="integer" />
+        <attr name="max_running_per_row" format="integer" />
+        <attr name="show_debug" format="boolean" />
+        <attr name="start_Y_offset" format="float" />
+        <attr name="end_Y_offset" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="FancyCoverFlow">
+        <attr name="unselectedAlpha" format="float" />
+        <attr name="unselectedSaturation" format="float" />
+        <attr name="unselectedScale" format="float" />
+        <attr name="maxRotation" format="integer" />
+        <attr name="scaleDownGravity" format="float" />
+        <attr name="actionDistance" format="integer">
+            <enum name="auto" value="2147483647" />
+        </attr>
+    </declare-styleable>
+
+
+    <declare-styleable name="LineProgressBar">
+        <attr name="lpb_round" format="dimension" />
+        <attr name="lpb_space" format="dimension" />
+        <attr name="lpb_backColor" format="color" />
+        <attr name="lpb_progColor" format="color" />
+        <attr name="lpb_secoColor" format="color" />
+        <attr name="lpb_max" format="integer" />
+        <attr name="lpb_pro" format="integer" />
+        <attr name="lpb_sec" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="TitleView">
+        <attr name="tv_titleText" format="string" />
+        <attr name="tv_titleTextSize" format="integer" />
+        <attr name="tv_titleTextColor" format="color" />
+        <attr name="tv_itemBgColor" format="color" />
+        <attr name="tv_leftPadingLR" format="dimension" />
+        <attr name="tv_leftPadingTB" format="dimension" />
+        <attr name="tv_rightPadingLR" format="dimension" />
+        <attr name="tv_rightPadingTB" format="dimension" />
+        <attr name="tv_leftIcon" format="reference" />
+        <attr name="tv_leftText" format="string" />
+        <attr name="tv_leftTextSize" format="integer" />
+        <attr name="tv_leftTextColor" format="color" />
+        <attr name="tv_rightIcon" format="reference" />
+        <attr name="tv_rightText" format="string" />
+        <attr name="tv_rightTextSize" format="integer" />
+        <attr name="tv_rightTextColor" format="color" />
+        <attr name="tv_leftShow" format="enum">
+            <enum name="none" value="0"/>
+            <enum name="icon" value="1"/>
+            <enum name="text" value="2"/>
+        </attr>
+        <attr name="tv_rightShow" format="enum">
+            <enum name="none" value="0"/>
+            <enum name="icon" value="1"/>
+            <enum name="text" value="2"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="FilletStrokeView">
+        <attr name="fillet" format="dimension" />
+        <attr name="stroke" format="dimension" />
+        <attr name="strokeColor" format="color" />
+        <attr name="filletColor" format="color" />
+        <attr name="pressedColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="PagerSlidingTabStrip">
+        <attr name="pstsIndicatorColor" format="color" />
+        <attr name="pstsUnderlineColor" format="color" />
+        <attr name="pstsDividerColor" format="color" />
+        <attr name="pstsIndicatorHeight" format="dimension" />
+        <attr name="pstsUnderlineHeight" format="dimension" />
+        <attr name="pstsDividerPadding" format="dimension" />
+        <attr name="pstsTabPaddingLeftRight" format="dimension" />
+        <attr name="pstsScrollOffset" format="dimension" />
+        <attr name="pstsTabBackground" format="reference" />
+        <attr name="pstsShouldExpand" format="boolean" />
+        <attr name="pstsTextAllCaps" format="boolean" />
+        <attr name="pstsTextSize" format="integer" />
+        <attr name="pstsTextColor" format="color" />
+        <attr name="pstsSelectTextColor" format="color" />
+        <attr name="pstsIndicatorPaddingLeftRight" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="CircleProgressBar">
+        <attr name="progress_complete_color" format="color"/>
+        <attr name="progress_uncomplete_color" format="color"/>
+        <attr name="progress_fill_color" format="color"/>
+        <attr name="progress_text_color" format="color"/>
+        <attr name="progress_fill_radius" format="dimension"/>
+        <attr name="progress_text_size" format="dimension"/>
+        <attr name="progress_progress" format="integer"/>
+        <attr name="progress_maxprogress" format="integer"/>
+        <attr name="progress_text_visibility" format="enum">
+            <enum name="visible" value="1"/>
+            <enum name="invisible" value="0"/>
+        </attr>
+    </declare-styleable>
+
+
+</resources>

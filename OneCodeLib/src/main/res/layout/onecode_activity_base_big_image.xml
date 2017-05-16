@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#333333">
+
+    <chenhao.lib.onecode.view.SimlpViewPager
+        android:id="@+id/big_image_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"/>
+
+    <chenhao.lib.onecode.view.TitleView
+        android:id="@id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_view_height"
+        android:background="#99000000"
+        app:tv_leftShow="icon"
+        app:tv_titleTextColor="@android:color/white"
+        app:tv_leftIcon="@drawable/onecode_icon_back_w"
+        app:tv_titleTextSize="@integer/title_text_big_size_i"
+        app:tv_leftTextSize="@integer/title_text_min_size_i"
+        app:tv_rightTextSize="@integer/title_text_min_size_i"/>
+
+</RelativeLayout>

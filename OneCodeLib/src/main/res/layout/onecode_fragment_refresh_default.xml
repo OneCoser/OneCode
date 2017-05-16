@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/main_bg">
+
+    <chenhao.lib.onecode.refresh.PullToRefreshView
+        android:id="@id/refresh_view_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_bg"
+        app:avlv_color="#333333">
+
+        <chenhao.lib.onecode.refresh.LoadMoreRecyclerView
+            android:id="@id/refresh_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            app:avlv_color="#333333"
+            app:avlv_style="Pacman"
+            app:lmfv_txtColor_noMore="#999999"
+            app:lmfv_txt_noMore="到底了,别扯了~"/>
+
+    </chenhao.lib.onecode.refresh.PullToRefreshView>
+
+    <LinearLayout
+        android:id="@id/system_status"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@id/refresh_view_layout"
+        android:layout_alignLeft="@id/refresh_view_layout"
+        android:layout_alignRight="@id/refresh_view_layout"
+        android:layout_alignTop="@id/refresh_view_layout"
+        android:background="@color/status_bg"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" />
+
+</RelativeLayout>

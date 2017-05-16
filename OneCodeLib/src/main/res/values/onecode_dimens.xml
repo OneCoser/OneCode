@@ -1,0 +1,12 @@
+<resources>
+
+    <dimen name="title_view_height">48dp</dimen>
+    <dimen name="title_text_big_size">18sp</dimen>
+    <integer name="title_text_big_size_i">18</integer>
+    <dimen name="title_text_min_size">14sp</dimen>
+    <integer name="title_text_min_size_i">14</integer>
+
+    <dimen name="page_tab_h">40dp</dimen>
+
+    <dimen name="comm_bt">45dp</dimen>
+</resources>
