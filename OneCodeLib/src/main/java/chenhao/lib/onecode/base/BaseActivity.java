@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import chenhao.lib.onecode.OneCode;
 import chenhao.lib.onecode.R;
 import org.simple.eventbus.EventBus;
 import butterknife.ButterKnife;
@@ -26,7 +28,11 @@ public abstract class BaseActivity extends FragmentActivity {
     protected abstract void reLoad(int status);
 
     public int getStatusBarColor(){
-        return Color.BLACK;
+        if (null!= OneCode.getConfig()&&OneCode.getConfig().getDefaultStatusBarColor(this)!=0){
+            return OneCode.getConfig().getDefaultStatusBarColor(this);
+        }else{
+            return Color.BLACK;
+        }
     }
 
     @Override

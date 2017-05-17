@@ -4,7 +4,6 @@
     <item name="system_status" type="id" />
     <item name="refresh_view" type="id" />
     <item name="refresh_view_layout" type="id" />
-    <item name="sreach_edit" type="id" />
     <item name="title_view" type="id" />
     <item name="title_left" type="id" />
     <item name="title_left_unread" type="id" />

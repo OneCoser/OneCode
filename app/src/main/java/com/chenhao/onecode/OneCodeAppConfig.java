@@ -1,5 +1,6 @@
 package com.chenhao.onecode;
 
+import android.app.Activity;
 import android.os.Environment;
 import java.io.File;
 import java.util.Map;
@@ -77,5 +78,20 @@ public class OneCodeAppConfig implements OneCodeConfig{
         } else {
             return OneCodeApp.getInstance().getCacheDir().getAbsolutePath() + File.separator;
         }
+    }
+
+    @Override
+    public int getDefaultStatusBarColor(Activity a) {
+        return 0;
+    }
+
+    @Override
+    public int getDefaultImageLoadResId() {
+        return 0;
+    }
+
+    @Override
+    public int getDefaultHeadLoadResId() {
+        return 0;
     }
 }

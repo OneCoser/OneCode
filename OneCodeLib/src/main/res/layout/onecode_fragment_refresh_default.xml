@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/main_bg">
+    android:background="@android:color/white">
 
     <chenhao.lib.onecode.refresh.PullToRefreshView
         android:id="@id/refresh_view_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_bg"
+        android:background="@android:color/white"
         app:avlv_color="#333333">
 
         <chenhao.lib.onecode.refresh.LoadMoreRecyclerView
@@ -32,7 +32,7 @@
         android:layout_alignLeft="@id/refresh_view_layout"
         android:layout_alignRight="@id/refresh_view_layout"
         android:layout_alignTop="@id/refresh_view_layout"
-        android:background="@color/status_bg"
+        android:background="@color/onecode_status_bg"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone" />

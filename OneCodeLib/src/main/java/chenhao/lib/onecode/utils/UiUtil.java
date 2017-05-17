@@ -259,21 +259,7 @@ public class UiUtil {
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 window.setStatusBarColor(color);
                 //底部导航栏
-                //window.setNavigationBarColor(ContextCompat.getColor(activity,colorResId));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setWindowStatusBarColor(Dialog dialog, int color) {
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Window window = dialog.getWindow();
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(color);
-                //底部导航栏
-                //window.setNavigationBarColor(ContextCompat.getColor(dialog.getContext(),colorResId));
+                //window.setNavigationBarColor(color);
             }
         } catch (Exception e) {
             e.printStackTrace();

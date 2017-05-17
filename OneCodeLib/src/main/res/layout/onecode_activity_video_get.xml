@@ -9,13 +9,13 @@
     <chenhao.lib.onecode.view.TitleView
         android:id="@id/title_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_view_height"
+        android:layout_height="@dimen/onecode_title_view_height"
         android:background="#161616"
         app:tv_leftIcon="@drawable/onecode_icon_back_w"
         app:tv_leftShow="icon"
-        app:tv_leftTextSize="@integer/title_text_min_size_i"
+        app:tv_leftTextSize="@integer/onecode_title_text_min_size_i"
         app:tv_titleText="本地视频"
-        app:tv_titleTextSize="@integer/title_text_big_size_i"
+        app:tv_titleTextSize="@integer/onecode_title_text_big_size_i"
         app:tv_titleTextColor="@android:color/white"/>
 
     <GridView
@@ -47,7 +47,7 @@
         <LinearLayout
             android:id="@+id/video_player_action"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:background="#99000000"
             android:orientation="horizontal">
 
@@ -59,7 +59,7 @@
                 android:gravity="center"
                 android:text="关闭预览"
                 android:textColor="@android:color/white"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="1dp"
@@ -75,7 +75,7 @@
                 android:gravity="center"
                 android:text="确定选择"
                 android:textColor="@android:color/white"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 

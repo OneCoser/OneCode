@@ -13,6 +13,7 @@ import chenhao.lib.onecode.image.AlbumListActivity;
 import chenhao.lib.onecode.image.GetPhotoInfo;
 import chenhao.lib.onecode.utils.LayoutManagerUtil;
 import chenhao.lib.onecode.video.VideoListActivity;
+import chenhao.lib.onecode.view.TitleView;
 
 /**
  * 所属项目：OneCode
@@ -30,9 +31,20 @@ public class OneCodeActivity extends RefreshBaseActivity<String>{
         return LayoutManagerUtil.getList(this);
     }
 
+    @Bind(R.id.title_view)
+    TitleView titleView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        titleView.setTextIcon("框架代码演示","","",R.drawable.onecode_icon_back_w,0);
+        titleView.setShow(TitleView.SHOW_ICON,TitleView.SHOW_NONE);
+        titleView.setOnTitleViewAction(new TitleView.OnTitleViewAction() {
+            @Override
+            public void onAction(int action) {
+                onBackPressed();
+            }
+        });
         loadData(false,false);
     }
 

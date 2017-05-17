@@ -69,27 +69,6 @@
         <attr name="cpb_background_progressbar_color" format="color" />
     </declare-styleable>
 
-    <declare-styleable name="DanmakuView">
-        <attr name="max_row" format="integer" />
-        <attr name="pick_interval" format="integer" />
-        <attr name="max_running_per_row" format="integer" />
-        <attr name="show_debug" format="boolean" />
-        <attr name="start_Y_offset" format="float" />
-        <attr name="end_Y_offset" format="float" />
-    </declare-styleable>
-
-    <declare-styleable name="FancyCoverFlow">
-        <attr name="unselectedAlpha" format="float" />
-        <attr name="unselectedSaturation" format="float" />
-        <attr name="unselectedScale" format="float" />
-        <attr name="maxRotation" format="integer" />
-        <attr name="scaleDownGravity" format="float" />
-        <attr name="actionDistance" format="integer">
-            <enum name="auto" value="2147483647" />
-        </attr>
-    </declare-styleable>
-
-
     <declare-styleable name="LineProgressBar">
         <attr name="lpb_round" format="dimension" />
         <attr name="lpb_space" format="dimension" />
@@ -138,24 +117,6 @@
         <attr name="pressedColor" format="color" />
     </declare-styleable>
 
-    <declare-styleable name="PagerSlidingTabStrip">
-        <attr name="pstsIndicatorColor" format="color" />
-        <attr name="pstsUnderlineColor" format="color" />
-        <attr name="pstsDividerColor" format="color" />
-        <attr name="pstsIndicatorHeight" format="dimension" />
-        <attr name="pstsUnderlineHeight" format="dimension" />
-        <attr name="pstsDividerPadding" format="dimension" />
-        <attr name="pstsTabPaddingLeftRight" format="dimension" />
-        <attr name="pstsScrollOffset" format="dimension" />
-        <attr name="pstsTabBackground" format="reference" />
-        <attr name="pstsShouldExpand" format="boolean" />
-        <attr name="pstsTextAllCaps" format="boolean" />
-        <attr name="pstsTextSize" format="integer" />
-        <attr name="pstsTextColor" format="color" />
-        <attr name="pstsSelectTextColor" format="color" />
-        <attr name="pstsIndicatorPaddingLeftRight" format="dimension" />
-    </declare-styleable>
-
     <declare-styleable name="CircleProgressBar">
         <attr name="progress_complete_color" format="color"/>
         <attr name="progress_uncomplete_color" format="color"/>
@@ -170,6 +131,5 @@
             <enum name="invisible" value="0"/>
         </attr>
     </declare-styleable>
-
 
 </resources>

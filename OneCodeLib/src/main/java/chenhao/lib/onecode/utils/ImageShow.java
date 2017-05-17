@@ -48,6 +48,22 @@ public class ImageShow {
         }
     }
 
+    public static int getDefaultImageLoadResId(){
+        int id=R.drawable.default_image_load;
+        if (null!=OneCode.getConfig()&&OneCode.getConfig().getDefaultImageLoadResId()!=0){
+            id=OneCode.getConfig().getDefaultImageLoadResId();
+        }
+        return id;
+    }
+
+    public static int getDefaultHeadLoadResId(){
+        int id=R.drawable.default_head_load;
+        if (null!=OneCode.getConfig()&&OneCode.getConfig().getDefaultHeadLoadResId()!=0){
+            id=OneCode.getConfig().getDefaultHeadLoadResId();
+        }
+        return id;
+    }
+
     public static final String NULL_URI="chenhao.lib.onecode.ImageShow";
 
     public static String getResUri(int resId){
@@ -151,7 +167,7 @@ public class ImageShow {
     }
 
     public static void loadLarge(LargeDraweeView largeDraweeView, String uri, boolean autoPlay){
-        loadLarge(largeDraweeView,uri,autoPlay, R.drawable.default_image_load);
+        loadLarge(largeDraweeView,uri,autoPlay, getDefaultHeadLoadResId());
     }
 
     public static void loadLarge(LargeDraweeView largeDraweeView, String uri, boolean autoPlay, int defaultResId){
@@ -176,19 +192,15 @@ public class ImageShow {
 
     public static void setHierarchyDefault(SimpleDraweeView view) {
         if (null!=view){
-            setHierarchy(view, ScalingUtils.ScaleType.CENTER_CROP,
-                    getDrawable(R.drawable.default_image_load),
-                    getDrawable(R.drawable.default_image_load),
-                    getDrawable(R.drawable.default_image_load));
+            int id=getDefaultImageLoadResId();
+            setHierarchy(view, ScalingUtils.ScaleType.CENTER_CROP, getDrawable(id), getDrawable(id), getDrawable(id));
         }
     }
 
     public static void setHierarchyHead(SimpleDraweeView view) {
         if (null!=view){
-            setHierarchy(view, ScalingUtils.ScaleType.FIT_CENTER,
-                    getDrawable(R.drawable.default_head_load),
-                    getDrawable(R.drawable.default_head_load),
-                    getDrawable(R.drawable.default_head_load));
+            int id=getDefaultHeadLoadResId();
+            setHierarchy(view, ScalingUtils.ScaleType.FIT_CENTER, getDrawable(id), getDrawable(id), getDrawable(id));
         }
     }
 
@@ -341,10 +353,11 @@ public class ImageShow {
 
     public static DisplayImageOptions getImgOption() {
         if (imgOption == null) {
+            int id=getDefaultImageLoadResId();
             imgOption = new DisplayImageOptions.Builder()
-                    .showImageForEmptyUri(R.drawable.default_image_load)
-                    .showImageOnFail(R.drawable.default_image_load)
-                    .showImageOnLoading(R.drawable.default_image_load)
+                    .showImageForEmptyUri(id)
+                    .showImageOnFail(id)
+                    .showImageOnLoading(id)
                     .cacheInMemory(true)
                     .cacheOnDisk(true)
                     .considerExifParams(true)
@@ -357,10 +370,11 @@ public class ImageShow {
 
     public static DisplayImageOptions getHeadOption() {
         if (headOption == null) {
+            int id=getDefaultHeadLoadResId();
             headOption = new DisplayImageOptions.Builder()
-                    .showImageForEmptyUri(R.drawable.default_head_load)
-                    .showImageOnFail(R.drawable.default_head_load)
-                    .showImageOnLoading(R.drawable.default_head_load)
+                    .showImageForEmptyUri(id)
+                    .showImageOnFail(id)
+                    .showImageOnLoading(id)
                     .cacheInMemory(true)
                     .cacheOnDisk(true)
                     .considerExifParams(true)

@@ -3,24 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_bg">
+    android:background="@android:color/white">
 
     <chenhao.lib.onecode.view.TitleView
         android:id="@id/title_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_view_height"
-        android:background="@color/title_bg_color"
-        app:tv_leftTextSize="@integer/title_text_min_size_i"
-        app:tv_rightTextSize="@integer/title_text_min_size_i"
+        android:layout_height="@dimen/onecode_title_view_height"
+        android:background="#333333"
+        app:tv_leftTextSize="@integer/onecode_title_text_min_size_i"
+        app:tv_rightTextSize="@integer/onecode_title_text_min_size_i"
         app:tv_titleText="Title"
-        app:tv_titleTextSize="@integer/title_text_big_size_i" />
+        app:tv_titleTextSize="@integer/onecode_title_text_big_size_i"
+        app:tv_titleTextColor="@android:color/white"/>
 
     <chenhao.lib.onecode.refresh.PullToRefreshView
         android:id="@id/refresh_view_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/title_view"
-        android:background="@color/main_bg"
+        android:background="@android:color/white"
         app:avlv_color="#333333">
 
         <chenhao.lib.onecode.refresh.LoadMoreRecyclerView
@@ -43,7 +44,7 @@
         android:layout_alignLeft="@id/refresh_view_layout"
         android:layout_alignRight="@id/refresh_view_layout"
         android:layout_alignTop="@id/refresh_view_layout"
-        android:background="@color/status_bg"
+        android:background="@color/onecode_status_bg"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone" />

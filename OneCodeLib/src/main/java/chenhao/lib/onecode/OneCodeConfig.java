@@ -1,5 +1,7 @@
 package chenhao.lib.onecode;
 
+import android.app.Activity;
+
 import java.util.Map;
 
 public interface OneCodeConfig {
@@ -33,5 +35,14 @@ public interface OneCodeConfig {
 
     //缓存路径
     String getCachePath();
+
+    //statusbar默认颜色
+    int getDefaultStatusBarColor(Activity a);
+
+    //加载图片时的默认图
+    int getDefaultImageLoadResId();
+
+    //加载头像时的默认图
+    int getDefaultHeadLoadResId();
 
 }

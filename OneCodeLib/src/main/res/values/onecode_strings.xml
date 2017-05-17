@@ -1,9 +1,0 @@
-<resources>
-
-    <string name="comm_back">返回</string>
-    <string name="comm_submit">提交</string>
-    <string name="comm_save">保存</string>
-    <string name="comm_cancel">取消</string>
-    <string name="comm_finish">完成</string>
-
-</resources>

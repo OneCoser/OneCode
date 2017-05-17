@@ -14,13 +14,13 @@
     <chenhao.lib.onecode.view.TitleView
         android:id="@id/title_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_view_height"
+        android:layout_height="@dimen/onecode_title_view_height"
         android:background="#66000000"
         app:tv_leftIcon="@drawable/onecode_icon_back_w"
         app:tv_leftShow="icon"
-        app:tv_titleTextSize="@integer/title_text_big_size_i"
-        app:tv_leftTextSize="@integer/title_text_min_size_i"
-        app:tv_rightTextSize="@integer/title_text_min_size_i"
+        app:tv_titleTextSize="@integer/onecode_title_text_big_size_i"
+        app:tv_leftTextSize="@integer/onecode_title_text_min_size_i"
+        app:tv_rightTextSize="@integer/onecode_title_text_min_size_i"
         app:tv_titleTextColor="@android:color/white"/>
 
 </RelativeLayout>
