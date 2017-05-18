@@ -73,10 +73,6 @@ public class HttpCallBack<T> implements Response.ErrorListener {
         UiUtil.init().cancelDialog();
     }
 
-    public boolean onErrorBusinessFilter(){
-        return true;
-    }
-
     public void onErrorBusiness() {
         UiUtil.init().cancelDialog();
         UiUtil.init().toast(StringUtils.isNotEmpty(httpMsg)?httpMsg :StringUtils.isNotEmpty(httpMsgApiError)?httpMsgApiError:DEFAULT_HTTP_MSG_API);

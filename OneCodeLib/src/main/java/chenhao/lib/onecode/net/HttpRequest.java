@@ -180,7 +180,10 @@ public class HttpRequest extends Request<JSONObject> {
                 e.printStackTrace();
             }
         }
-        if (isBusinessError&&callBack.onErrorBusinessFilter()){
+        if (isBusinessError&&null!=OneCode.getConfig()){
+            isBusinessError=!OneCode.getConfig().onErrorBusinessFilter(callBack.httpCode,callBack.httpMsg);
+        }
+        if (isBusinessError){
             callBack.onErrorBusiness();
             parseCache();
         }

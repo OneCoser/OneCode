@@ -48,6 +48,11 @@ public class OneCodeAppConfig implements OneCodeConfig{
     }
 
     @Override
+    public boolean onErrorBusinessFilter(int code, String msg) {
+        return false;
+    }
+
+    @Override
     public String getApiBaseUrl() {
         return "";
     }
@@ -94,4 +99,5 @@ public class OneCodeAppConfig implements OneCodeConfig{
     public int getDefaultHeadLoadResId() {
         return 0;
     }
+
 }
