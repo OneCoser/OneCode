@@ -49,7 +49,8 @@ public class SimlpBigImageActivity extends BaseBigImageActivity {
     }
 
     @Override
-    protected void reLoad(int status) {
+    protected void systemStatusAction(int status) {
 
     }
+
 }

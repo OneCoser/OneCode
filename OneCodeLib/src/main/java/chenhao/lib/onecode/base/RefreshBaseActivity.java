@@ -202,7 +202,10 @@ public abstract class RefreshBaseActivity<T> extends BaseActivity {
     }
 
     @Override
-    protected void reLoad(int status) {
-        loadData(false,false);
+    protected void systemStatusAction(int status) {
+        if (status==SYSTEM_STATUS_NULL_DATA||status==SYSTEM_STATUS_API_ERROR||status==SYSTEM_STATUS_NET_ERROR){
+            loadData(false,false);
+        }
     }
+
 }

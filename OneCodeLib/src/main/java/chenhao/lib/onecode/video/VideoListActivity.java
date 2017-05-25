@@ -332,7 +332,7 @@ public class VideoListActivity extends BaseActivity implements AdapterView.OnIte
     }
 
     @Override
-    protected void reLoad(int status) {
+    protected void systemStatusAction(int status) {
 
     }
 }

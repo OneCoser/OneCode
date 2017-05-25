@@ -142,7 +142,7 @@ public class SimlpVideoPlayActivity extends BaseActivity {
     }
 
     @Override
-    protected void reLoad(int status) {
+    protected void systemStatusAction(int status) {
 
     }
 }
