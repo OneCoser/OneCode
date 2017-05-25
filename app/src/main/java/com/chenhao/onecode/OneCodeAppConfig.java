@@ -1,7 +1,10 @@
 package com.chenhao.onecode;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Environment;
+import android.view.View;
+
 import java.io.File;
 import java.util.Map;
 import chenhao.lib.onecode.OneCodeConfig;
@@ -100,4 +103,23 @@ public class OneCodeAppConfig implements OneCodeConfig{
         return 0;
     }
 
+    @Override
+    public View getSystemStatusLoadingView(Context context, String pageName) {
+        return null;
+    }
+
+    @Override
+    public int getSystemStatusNullDataIcon(Context context, String pageName) {
+        return 0;
+    }
+
+    @Override
+    public int getSystemStatusNetErrorIcon(Context context, String pageName) {
+        return 0;
+    }
+
+    @Override
+    public int getSystemStatusApiErrorIcon(Context context, String pageName) {
+        return 0;
+    }
 }
