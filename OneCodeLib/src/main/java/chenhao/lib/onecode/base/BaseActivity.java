@@ -3,12 +3,10 @@ package chenhao.lib.onecode.base;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import chenhao.lib.onecode.OneCode;
 import chenhao.lib.onecode.R;
 import org.simple.eventbus.EventBus;
@@ -25,7 +23,7 @@ public abstract class BaseActivity extends FragmentActivity {
 
     public abstract String getPageName();
 
-    protected abstract void reLoad(int status);
+    protected abstract void systemStatusAction(int status);
 
     public int getStatusBarColor(){
         if (null!= OneCode.getConfig()&&OneCode.getConfig().getDefaultStatusBarColor(this)!=0){
@@ -72,31 +70,13 @@ public abstract class BaseActivity extends FragmentActivity {
         ButterKnife.bind(this);
     }
 
-    public final int SYSTEM_STATUS_HIDE = 0;
-    public final int SYSTEM_STATUS_LOADING = 1;
-    public final int SYSTEM_STATUS_NULL_DATA = 2;
-    public final int SYSTEM_STATUS_NET_ERROR = 3;
-    public final int SYSTEM_STATUS_API_ERROR = 4;
+    public static final int SYSTEM_STATUS_HIDE = 0;
+    public static final int SYSTEM_STATUS_LOADING = 1;
+    public static final int SYSTEM_STATUS_NULL_DATA = 2;
+    public static final int SYSTEM_STATUS_NET_ERROR = 3;
+    public static final int SYSTEM_STATUS_API_ERROR = 4;
     private LinearLayout system_status_layout;
-
-    public int getStatusIconNothing(){
-        return R.drawable.onecode_default_icon_nothing;
-    }
-    public int getStatusIconNet(){
-        return R.drawable.onecode_default_icon_internet;
-    }
-    public int getStatusIconApi(){
-        return R.drawable.onecode_default_icon_internet;
-    }
-
-    public void showSystemStatus(int status) {
-        showSystemStatus(status,
-                status == SYSTEM_STATUS_NULL_DATA? getStatusIconNothing():
-                        status == SYSTEM_STATUS_NET_ERROR?getStatusIconNet():
-                                status == SYSTEM_STATUS_API_ERROR?getStatusIconApi():getStatusIconNothing());
-    }
-
-    public void showSystemStatus(int status, int iconResId) {
+    public LinearLayout getSystemStatusLayout(){
         if (null == system_status_layout && null != findViewById(R.id.system_status)) {
             system_status_layout = (LinearLayout) findViewById(R.id.system_status);
             system_status_layout.setOnClickListener(new View.OnClickListener() {
@@ -105,21 +85,42 @@ public abstract class BaseActivity extends FragmentActivity {
                 }
             });
         }
-        if (null != system_status_layout) {
-            if (system_status_layout.getChildCount()>0){
-                system_status_layout.removeAllViews();
+        return system_status_layout;
+    }
+
+
+    public void showSystemStatus(int status) {
+        if (null!=OneCode.getConfig()){
+            showSystemStatus(status,
+                            status == SYSTEM_STATUS_NET_ERROR?OneCode.getConfig().getSystemStatusApiErrorIcon(this,getPageName()):
+                                    status == SYSTEM_STATUS_API_ERROR?OneCode.getConfig().getSystemStatusNetErrorIcon(this,getPageName()):
+                                            OneCode.getConfig().getSystemStatusNullDataIcon(this,getPageName()),
+                    OneCode.getConfig().getSystemStatusLoadingView(this,getPageName()));
+        }else{
+            showSystemStatus(status,0,null);
+        }
+    }
+
+    public void showSystemStatus(int status,int iconResId,View loadingView) {
+        if (null != getSystemStatusLayout()) {
+            if (getSystemStatusLayout().getChildCount()>0){
+                getSystemStatusLayout().removeAllViews();
             }
             if (status == SYSTEM_STATUS_HIDE) {
-                setVis(system_status_layout, View.GONE);
+                setVis(getSystemStatusLayout(), View.GONE);
             } else if (status == SYSTEM_STATUS_LOADING) {
-                system_status_layout.addView(View.inflate(this,R.layout.onecode_layout_loading_small,null),
-                        new LinearLayout.LayoutParams((int)(45*dp),(int)(45*dp)));
-                setVis(system_status_layout, View.VISIBLE);
+                if (null!=loadingView){
+                    getSystemStatusLayout().addView(loadingView);
+                }else{
+                    getSystemStatusLayout().addView(View.inflate(this,R.layout.onecode_layout_loading_small,null));
+                }
+                setVis(getSystemStatusLayout(), View.VISIBLE);
             } else {
-                ImageView system_status_icon = new ImageView(system_status_layout.getContext());
+                ImageView system_status_icon = new ImageView(getSystemStatusLayout().getContext());
                 system_status_icon.setTag(status);
                 if (iconResId==0){
-                    iconResId=getStatusIconNothing();
+                    iconResId=status == SYSTEM_STATUS_NET_ERROR||status == SYSTEM_STATUS_API_ERROR?
+                            R.drawable.onecode_default_icon_internet: R.drawable.onecode_default_icon_nothing;
                 }
                 system_status_icon.setImageResource(iconResId);
                 system_status_icon.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
@@ -134,11 +135,11 @@ public abstract class BaseActivity extends FragmentActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        reLoad(s);
+                        systemStatusAction(s);
                     }
                 });
-                system_status_layout.addView(system_status_icon);
-                setVis(system_status_layout, View.VISIBLE);
+                getSystemStatusLayout().addView(system_status_icon);
+                setVis(getSystemStatusLayout(), View.VISIBLE);
             }
         }
     }
