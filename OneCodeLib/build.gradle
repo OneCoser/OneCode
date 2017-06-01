@@ -41,11 +41,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.commit451:PhotoView:1.2.4'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
-//  必备-支持绝大部分设备
-    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.5.1'
-    compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.5.1'
-//  可选-解决一些奇葩设备
-    compile 'tv.danmaku.ijk.media:ijkplayer-armv5:0.5.1'
-    compile 'tv.danmaku.ijk.media:ijkplayer-x86:0.5.1'
     compile 'com.android.support:multidex:1.0.0'
 }

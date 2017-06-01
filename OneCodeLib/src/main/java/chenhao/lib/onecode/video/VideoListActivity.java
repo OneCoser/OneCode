@@ -2,38 +2,35 @@ package chenhao.lib.onecode.video;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import chenhao.lib.onecode.R;
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import chenhao.lib.onecode.base.BaseActivity;
-import chenhao.lib.onecode.utils.FileUtils;
-import chenhao.lib.onecode.utils.StringUtils;
-import chenhao.lib.onecode.utils.UiUtil;
-import chenhao.lib.onecode.video.ijk.CommonVideoView;
-import chenhao.lib.onecode.view.TitleView;
-import tv.danmaku.ijk.media.player.IMediaPlayer;
 
-public class VideoListActivity extends BaseActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
+import chenhao.lib.onecode.OneCode;
+import chenhao.lib.onecode.R;
+import chenhao.lib.onecode.base.BaseViewHolder;
+import chenhao.lib.onecode.base.RefreshBaseActivity;
+import chenhao.lib.onecode.utils.FileUtils;
+import chenhao.lib.onecode.utils.ImageShow;
+import chenhao.lib.onecode.utils.LayoutManagerUtil;
+import chenhao.lib.onecode.utils.StringUtils;
+import chenhao.lib.onecode.view.AlertItem;
+import chenhao.lib.onecode.view.TitleView;
+
+public class VideoListActivity extends RefreshBaseActivity<Video>{
 
     public static final int RECODE_GET_VIDEO = 66;
     public static void get(Activity a){
@@ -48,52 +45,40 @@ public class VideoListActivity extends BaseActivity implements AdapterView.OnIte
         return Color.BLACK;
     }
 
-    private Video get;
-    private GridView videosShow;
-    private VideoShowAdapter showAdapter;
-    private AbsListView.LayoutParams params;
-    private View video_player_layout, video_player_action;
-    private CommonVideoView videoView;
+    @Override
+    public RecyclerView.LayoutManager getLayoutManager() {
+        return LayoutManagerUtil.getGrid(this,3);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.onecode_activity_video_get);
-        TitleView titleView = (TitleView) findViewById(R.id.title_view);
+        TitleView titleView=findV(R.id.title_view);
+        titleView.setBackgroundColor(Color.parseColor("#161616"));
+        getRefreshView().setBackgroundColor(Color.parseColor("#333333"));
+        getRefreshViewLayout().setBackgroundColor(Color.parseColor("#333333"));
+        titleView.setTextIcon("视频","","",R.drawable.onecode_icon_back_w,0);
+        titleView.getTitleTextView().setTextColor(Color.WHITE);
+        titleView.setShow(TitleView.SHOW_ICON, TitleView.SHOW_NONE);
         titleView.setOnTitleViewAction(new TitleView.OnTitleViewAction() {
             @Override
             public void onAction(int action) {
-                if (action == TitleView.ACTION_LEFT_CLICK) {
+                if (action== TitleView.ACTION_LEFT_CLICK){
                     onBackPressed();
                 }
             }
         });
-        video_player_layout = findViewById(R.id.video_player_layout);
-        video_player_action = findViewById(R.id.video_player_action);
-        videoView = (CommonVideoView) findViewById(R.id.video_player);
-        video_player_layout.setOnClickListener(this);
-        findViewById(R.id.video_player_close).setOnClickListener(this);
-        findViewById(R.id.video_player_submit).setOnClickListener(this);
-        videosShow = (GridView) findViewById(R.id.video_get_list);
-        videosShow.setOnItemClickListener(this);
-        int w = getResources().getDisplayMetrics().widthPixels;
-        float dp = getResources().getDisplayMetrics().density;
-        int itemWH = (w - (int) (20 * dp)) / 3;
-        params = new AbsListView.LayoutParams(itemWH, itemWH);
-        changeFull(false);
-        loadData(true);
+        loadData(false,false);
     }
 
-    private static final String EVENT_DATA_SUCCESS = "event_video_get_data_success";
-
-    private void loadData(boolean showDialog) {
-        if (showDialog) {
-            UiUtil.init().showDialog(this, true);
-        }
+    @Override
+    public void loadData(boolean getMore, boolean isUser) {
+        super.loadData(getMore, isUser);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                List<Video> list = new ArrayList<>();
+                List<Video> data = new ArrayList<>();
                 ContentResolver cr = getContentResolver();
                 Cursor cursor = cr.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null, null, null, MediaStore.Video.Media.DATE_ADDED + " desc");
                 if (null != cursor) {
@@ -135,204 +120,74 @@ public class VideoListActivity extends BaseActivity implements AdapterView.OnIte
 //                        get.thumb = MediaStore.Video.Thumbnails.getThumbnail(cr,
 //                                get.id, MediaStore.Video.Thumbnails.MICRO_KIND, options);
                         if (get.size > 0) {
-                            list.add(get);
+                            data.add(get);
                         }
                     }
                     cursor.close();
                 }
-                EventBus.getDefault().post(list, EVENT_DATA_SUCCESS);
+                EventBus.getDefault().post(data, EVENT_DATA_SUCCESS);
             }
         }).start();
     }
 
+    private final String EVENT_DATA_SUCCESS = "event_video_list_data_success";
     @Subscriber(tag = EVENT_DATA_SUCCESS)
     public void onDataSuccess(List<Video> videos) {
-        showAdapter = new VideoShowAdapter(videos);
-        videosShow.setAdapter(showAdapter);
-        UiUtil.init().cancelDialog();
-    }
-
-    private class VideoShowAdapter extends BaseAdapter {
-
-        List<Video> list;
-
-        public VideoShowAdapter(List<Video> videos) {
-            list = new ArrayList<>();
-            if (null != videos && videos.size() > 0) {
-                list.addAll(videos);
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return list.size();
-        }
-
-        @Override
-        public Video getItem(int position) {
-            return list.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View v, ViewGroup parent) {
-            ShowItem item = null;
-            if (null == v || null == v.getTag() || !(v.getTag() instanceof ShowItem)) {
-                item = new ShowItem();
-                v = View.inflate(VideoListActivity.this, R.layout.onecode_item_video_get, null);
-                item.name = (TextView) v.findViewById(R.id.item_video_get_name);
-                item.thumb = (ImageView) v.findViewById(R.id.item_video_get_thumb);
-                v.setLayoutParams(params);
-                v.setTag(item);
-            } else {
-                item = (ShowItem) v.getTag();
-            }
-            Video get = list.get(position);
-            item.name.setText(get.name);
-//            if (null != get.thumb) {
-//                item.thumb.setImageBitmap(get.thumb);
-//            } else
-            if (StringUtils.isNotEmpty(get.thumbPath)) {
-                item.thumb.setImageBitmap(BitmapFactory.decodeFile(get.thumbPath));
-            } else {
-                item.thumb.setImageResource(R.drawable.default_image_load);
-            }
-            return v;
-        }
-    }
-
-    private class ShowItem {
-        public TextView name;
-        public ImageView thumb;
+        onDataSuccess(videos,SYSTEM_STATUS_NULL_DATA,false);
     }
 
     @Override
-    public void onClick(View v) {
-        if (v.getId()==R.id.video_player_close){
-            stop();
-        }else if(v.getId()==R.id.video_player_submit){
-            stop();
-            if (null != get) {
-                setResult(RESULT_OK, new Intent().putExtra("video", get));
-                finish();
-            }
-        }
+    protected BaseViewHolder<Video> getItem(int viewType) {
+        return new ItemVideo();
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != showAdapter && position >= 0 && position < showAdapter.getCount()) {
-            get = showAdapter.getItem(position);
-            play();
-        }
-    }
+    public class ItemVideo extends BaseViewHolder<Video>{
 
-    private void play() {
-        if (null != get) {
-            videoView.stop();
-            if (video_player_layout.getVisibility() != View.VISIBLE) {
-                video_player_layout.setVisibility(View.VISIBLE);
-            }
-            videoView.setData(get.path, "file://" + get.thumbPath);
-            videoView.setVideoViewListener(videoViewListener);
-            video_player_action.setVisibility(View.VISIBLE);
-        } else {
-            stop();
-        }
-    }
+        ImageView image;
+        TextView name;
 
-    private boolean stop() {
-        if (null != videoView) {
-            videoView.stop();
-        }
-        if (video_player_layout.getVisibility() != View.GONE) {
-            video_player_layout.setVisibility(View.GONE);
-            return true;
-        }
-        return false;
-    }
+        Video item;
 
-    @Override
-    public void onBackPressed() {
-        if (isFull) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        } else if (!stop()) {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        changeFull(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE);
-    }
-
-    private boolean isFull;
-
-    public void changeFull(boolean full) {
-        isFull = full;
-        WindowManager.LayoutParams fullParams = getWindow().getAttributes();
-        if (isFull) {
-            fullParams.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
-            getWindow().setAttributes(fullParams);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        } else {
-            fullParams.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            getWindow().setAttributes(fullParams);
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
-        videoView.setFullIcon(isFull);
-    }
-
-    private CommonVideoView.OnCommonVideoViewListener videoViewListener = new CommonVideoView.OnCommonVideoViewListener() {
-        @Override
-        public void onShowController(boolean show) {
-            if (videoView.hasUrl()) {
-                video_player_action.setVisibility(show ? View.VISIBLE : View.GONE);
-            }
+        public ItemVideo() {
+            super(View.inflate(VideoListActivity.this,R.layout.onecode_item_video_list,null));
+            itemView.setLayoutParams(new RecyclerView.LayoutParams(screenW/3,screenW/3));
+            image=findV(itemView,R.id.item_video_get_thumb);
+            name=findV(itemView,R.id.item_video_get_name);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (null!=item){
+                        new AlertItem.Builder(VideoListActivity.this)
+                                .setItems(new String[]{"播放视频", "确定选择", "取消"}, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        if (i==0){
+                                            if (null== OneCode.getConfig()||!OneCode.getConfig().goVideoPlay(item)){
+                                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                                intent.setDataAndType(Uri.parse(item.path),"video/mp4");
+                                                VideoListActivity.this.startActivity(intent);
+                                            }
+                                        }else if(i==1){
+                                            setResult(RESULT_OK, new Intent().putExtra("data", item));
+                                            finish();
+                                        }
+                                    }
+                                }).createShow();
+                    }
+                }
+            });
         }
 
         @Override
-        public void pauseOrStart(boolean isStart) {
-
+        public void initView(Video video, int position) {
+            ImageShow.loadFile(image,video.thumbPath);
+            name.setText(video.name);
+            item=video;
         }
-
-        @Override
-        public void onCompletion(IMediaPlayer mp) {
-
-        }
-
-        @Override
-        public void onClickFull() {
-            setRequestedOrientation(isFull ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }
-    };
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (null != videoView) {
-            videoView.pause();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        stop();
-        super.onDestroy();
     }
 
     @Override
     public String getPageName() {
         return this.getClass().getSimpleName();
-    }
-
-    @Override
-    protected void systemStatusAction(int status) {
-
     }
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import java.util.Map;
+import chenhao.lib.onecode.video.Video;
 
 public interface OneCodeConfig {
 
@@ -60,5 +61,8 @@ public interface OneCodeConfig {
 
     //加载头像时的默认图
     int getDefaultHeadLoadResId();
+
+    //选择视频时是否用第三方播放视频 true则代表已处理播放视频 不会再跳系统播放了
+    boolean goVideoPlay(Video video);
 
 }

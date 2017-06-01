@@ -8,6 +8,7 @@ import android.view.View;
 import java.io.File;
 import java.util.Map;
 import chenhao.lib.onecode.OneCodeConfig;
+import chenhao.lib.onecode.video.Video;
 
 /**
  * 所属项目：OneCode
@@ -121,5 +122,10 @@ public class OneCodeAppConfig implements OneCodeConfig{
     @Override
     public int getSystemStatusApiErrorIcon(Context context, String pageName) {
         return 0;
+    }
+
+    @Override
+    public boolean goVideoPlay(Video video) {
+        return false;
     }
 }

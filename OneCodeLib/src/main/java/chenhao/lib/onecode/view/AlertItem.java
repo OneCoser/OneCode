@@ -86,7 +86,7 @@ public class AlertItem extends Dialog {
             float dp=context.getResources().getDisplayMetrics().density;
             FilletLinearLayout layout=new FilletLinearLayout(context);
             layout.setOrientation(LinearLayout.VERTICAL);
-            layout.setFillet((int)(5*dp));
+            layout.setFillet((int)(3*dp));
             layout.initColor(Color.WHITE, Color.WHITE, Color.WHITE);
         	int itemWidth=(int)(context.getResources().getDisplayMetrics().widthPixels*0.66);
         	if (itemWidth<=0) {
