@@ -10,16 +10,7 @@ import chenhao.lib.onecode.utils.StringUtils;
 public abstract class HttpBase {
 
     public static <T> Request doHttp(boolean toJsonParams,int method, String url, Map<String, Object> params, Object tag, Class clazz, String dataName, @NonNull HttpCallBack<T> callback) {
-        if (null!= OneCode.getConfig()){
-            callback.init(clazz,dataName,
-                    OneCode.getConfig().getHttpSuccessCode(url),
-                    OneCode.getConfig().getHttpCodeName(url),
-                    OneCode.getConfig().getHttpMsgName(url),
-                    OneCode.getConfig().getHttpDefaultMsgApiError(),
-                    OneCode.getConfig().getHttpDefaultMsgNetError());
-        }else{
-            callback.init(clazz,dataName);
-        }
+        callback.init(clazz,dataName);
         return HttpClient.init().doHttp(toJsonParams,method,url,params,tag,callback);
     }
 

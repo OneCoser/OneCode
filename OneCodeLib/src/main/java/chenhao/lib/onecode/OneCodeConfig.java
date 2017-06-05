@@ -2,8 +2,14 @@ package chenhao.lib.onecode;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.View;
+
+import com.android.volley.Request;
+
 import java.util.Map;
+
+import chenhao.lib.onecode.net.HttpCallBack;
 import chenhao.lib.onecode.video.Video;
 
 public interface OneCodeConfig {
@@ -64,5 +70,8 @@ public interface OneCodeConfig {
 
     //选择视频时是否用第三方播放视频 true则代表已处理播放视频 不会再跳系统播放了
     boolean goVideoPlay(Video video);
+
+    //自定义网络请求&解析
+    <T> Request customDoHttp(boolean toJsonParams, int method, String url, Map<String, Object> params, Object tag, @NonNull HttpCallBack<T> callback);
 
 }

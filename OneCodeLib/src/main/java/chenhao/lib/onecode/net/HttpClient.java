@@ -34,10 +34,13 @@ public class HttpClient {
     }
 
     public <T> Request doHttp(boolean toJsonParams, int method, String url, Map<String, Object> params, Object tag, @NonNull HttpCallBack<T> callback) {
-        HttpRequest req = new HttpRequest(toJsonParams,method,
-                method == Request.Method.POST||toJsonParams?url: StringUtils.buildUrl(url, params),
-                method == Request.Method.POST||toJsonParams?params:null,
-                tag,callback);
+        Request req=null!=OneCode.getConfig()?OneCode.getConfig().customDoHttp(toJsonParams,method,url,params,tag,callback):null;
+        if (null==req){
+            req = new HttpRequest(toJsonParams,method,
+                    method == Request.Method.POST||toJsonParams?url: StringUtils.buildUrl(url, params),
+                    method == Request.Method.POST||toJsonParams?params:null,
+                    tag,callback);
+        }
         return getRequestQueue().add(req);
     }
 

@@ -2,17 +2,12 @@ package chenhao.lib.onecode.net;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import chenhao.lib.onecode.OneCode;
 import chenhao.lib.onecode.utils.Clog;
 import chenhao.lib.onecode.utils.StringUtils;
 import chenhao.lib.onecode.utils.UiUtil;
 
 public class HttpCallBack<T> implements Response.ErrorListener {
-
-    private final static int DEFAULT_SUCCESS_CODE = 200;
-    private final static String DEFAULT_HTTP_MSG_NAME = "msg";
-    private final static String DEFAULT_HTTP_CODE_NAME = "status";
-    private final static String DEFAULT_HTTP_MSG_API = "连接服务器出错";
-    private final static String DEFAULT_HTTP_MSG_NET = "网络连接错误,请检查你的网络设置";
 
     public int httpCode;
     public String httpMsg;
@@ -32,27 +27,20 @@ public class HttpCallBack<T> implements Response.ErrorListener {
     }
 
     public HttpCallBack() {
-        init(Boolean.class, "", DEFAULT_SUCCESS_CODE, DEFAULT_HTTP_CODE_NAME, DEFAULT_HTTP_MSG_NAME);
-    }
-
-    public HttpCallBack(Class clazz) {
-        init(clazz, "", DEFAULT_SUCCESS_CODE, DEFAULT_HTTP_CODE_NAME, DEFAULT_HTTP_MSG_NAME);
-    }
-
-    public HttpCallBack(Class clazz, String dataName) {
-        init(clazz, dataName, DEFAULT_SUCCESS_CODE, DEFAULT_HTTP_CODE_NAME, DEFAULT_HTTP_MSG_NAME);
-    }
-
-    public HttpCallBack(Class clazz, String dataName, int successCode, String httpCodeName, String httpMsgName) {
-        init(clazz, dataName, successCode, httpCodeName, httpMsgName);
+        init(Boolean.class, "");
     }
 
     public void init(Class clazz, String dataName) {
-        init(clazz, dataName, DEFAULT_SUCCESS_CODE, DEFAULT_HTTP_CODE_NAME, DEFAULT_HTTP_MSG_NAME);
-    }
-
-    public void init(Class clazz, String dataName, int successCode, String httpCodeName, String httpMsgName) {
-        init(clazz, dataName,successCode,httpCodeName,httpMsgName,DEFAULT_HTTP_MSG_API,DEFAULT_HTTP_MSG_NET);
+        if (null!= OneCode.getConfig()){
+            init(clazz,dataName,
+                    OneCode.getConfig().getHttpSuccessCode(url),
+                    OneCode.getConfig().getHttpCodeName(url),
+                    OneCode.getConfig().getHttpMsgName(url),
+                    OneCode.getConfig().getHttpDefaultMsgApiError(),
+                    OneCode.getConfig().getHttpDefaultMsgNetError());
+        }else{
+            init(clazz, dataName, 200, "status","msg","连接服务器出错","网络连接错误,请检查你的网络设置");
+        }
     }
 
     public void init(Class clazz, String dataName, int successCode, String httpCodeName, String httpMsgName,String httpMsgApiError,String httpMsgNetError) {
@@ -75,13 +63,13 @@ public class HttpCallBack<T> implements Response.ErrorListener {
 
     public void onErrorBusiness() {
         UiUtil.init().cancelDialog();
-        UiUtil.init().toast(StringUtils.isNotEmpty(httpMsg)?httpMsg :StringUtils.isNotEmpty(httpMsgApiError)?httpMsgApiError:DEFAULT_HTTP_MSG_API);
+        UiUtil.init().toast(StringUtils.isNotEmpty(httpMsg)?httpMsg:httpMsgApiError);
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
         UiUtil.init().cancelDialog();
-        UiUtil.init().toast(StringUtils.isNotEmpty(httpMsgNetError)?httpMsgNetError:DEFAULT_HTTP_MSG_NET);
+        UiUtil.init().toast(httpMsgNetError);
     }
 
 }

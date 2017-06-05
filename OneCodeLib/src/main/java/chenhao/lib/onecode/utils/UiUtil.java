@@ -79,18 +79,19 @@ public class UiUtil {
     public void toast(String msg) {
         toast(OneCode.getContext(),msg);
     }
+    public void toast(Context context, int resId) {
+        toast(context, context.getString(resId));
+    }
     public void toast(Context context, String msg) {
         try {
-            Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
+            if (StringUtils.isNotEmpty(msg)){
+                Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void toast(Context context, int resId) {
-        toast(context, context.getString(resId));
     }
 
     public void closeBroads(Activity context) {

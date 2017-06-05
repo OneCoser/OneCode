@@ -3,11 +3,15 @@ package com.chenhao.onecode;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.view.View;
+
+import com.android.volley.Request;
 
 import java.io.File;
 import java.util.Map;
 import chenhao.lib.onecode.OneCodeConfig;
+import chenhao.lib.onecode.net.HttpCallBack;
 import chenhao.lib.onecode.video.Video;
 
 /**
@@ -127,5 +131,10 @@ public class OneCodeAppConfig implements OneCodeConfig{
     @Override
     public boolean goVideoPlay(Video video) {
         return false;
+    }
+
+    @Override
+    public <T> Request customDoHttp(boolean toJsonParams, int method, String url, Map<String, Object> params, Object tag, @NonNull HttpCallBack<T> callback) {
+        return null;
     }
 }
