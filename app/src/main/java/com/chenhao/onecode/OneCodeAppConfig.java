@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.android.volley.Request;
@@ -136,5 +137,25 @@ public class OneCodeAppConfig implements OneCodeConfig{
     @Override
     public <T> Request customDoHttp(boolean toJsonParams, int method, String url, Map<String, Object> params, Object tag, @NonNull HttpCallBack<T> callback) {
         return null;
+    }
+
+    @Override
+    public void onActivityResume(Activity a,String pageName) {
+
+    }
+
+    @Override
+    public void onActivityPause(Activity a,String pageName) {
+
+    }
+
+    @Override
+    public void onFragmentResume(Fragment f,String pageName) {
+
+    }
+
+    @Override
+    public void onFragmentPause(Fragment f,String pageName) {
+
     }
 }

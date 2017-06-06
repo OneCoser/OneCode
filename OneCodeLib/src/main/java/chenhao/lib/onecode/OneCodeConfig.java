@@ -3,6 +3,7 @@ package chenhao.lib.onecode;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.android.volley.Request;
@@ -73,5 +74,13 @@ public interface OneCodeConfig {
 
     //自定义网络请求&解析
     <T> Request customDoHttp(boolean toJsonParams, int method, String url, Map<String, Object> params, Object tag, @NonNull HttpCallBack<T> callback);
+
+    void onActivityResume(Activity a,String pageName);
+
+    void onActivityPause(Activity a,String pageName);
+
+    void onFragmentResume(Fragment f,String pageName);
+
+    void onFragmentPause(Fragment f,String pageName);
 
 }

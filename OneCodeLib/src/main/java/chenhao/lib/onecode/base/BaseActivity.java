@@ -70,6 +70,22 @@ public abstract class BaseActivity extends FragmentActivity {
         ButterKnife.bind(this);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (null!=OneCode.getConfig()){
+            OneCode.getConfig().onActivityPause(this,getPageName());
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (null!=OneCode.getConfig()){
+            OneCode.getConfig().onActivityResume(this,getPageName());
+        }
+    }
+
     public static final int SYSTEM_STATUS_HIDE = 0;
     public static final int SYSTEM_STATUS_LOADING = 1;
     public static final int SYSTEM_STATUS_NULL_DATA = 2;

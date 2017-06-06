@@ -48,4 +48,8 @@ public class ActivityTask {
         }
     }
 
+    public List<Activity> getTaskList(){
+        return tasks;
+    }
+
 }
