@@ -183,39 +183,36 @@ public class ImageShow {
 
     public static void setHierarchy(SimpleDraweeView view, int resId) {
         if (null!=view&&resId!=0){
-            setHierarchy(view, ScalingUtils.ScaleType.CENTER_INSIDE,
-                    getDrawable(resId),
-                    getDrawable(resId),
-                    getDrawable(resId));
+            setHierarchy(view, ScalingUtils.ScaleType.CENTER_INSIDE,resId,resId,resId);
         }
     }
 
     public static void setHierarchyDefault(SimpleDraweeView view) {
         if (null!=view){
             int id=getDefaultImageLoadResId();
-            setHierarchy(view, ScalingUtils.ScaleType.CENTER_CROP, getDrawable(id), getDrawable(id), getDrawable(id));
+            setHierarchy(view, ScalingUtils.ScaleType.CENTER_INSIDE,id,id,id);
         }
     }
 
     public static void setHierarchyHead(SimpleDraweeView view) {
         if (null!=view){
             int id=getDefaultHeadLoadResId();
-            setHierarchy(view, ScalingUtils.ScaleType.FIT_CENTER, getDrawable(id), getDrawable(id), getDrawable(id));
+            setHierarchy(view, ScalingUtils.ScaleType.FIT_CENTER,id,id,id);
         }
     }
 
-    public static void setHierarchy(SimpleDraweeView view, ScalingUtils.ScaleType scaleType, Drawable placeholderDrawable, Drawable failureDrawable, Drawable retryDrawable) {
+    public static void setHierarchy(SimpleDraweeView view, ScalingUtils.ScaleType scaleType, int placeholderId, int failureId, int retryId) {
         GenericDraweeHierarchy hierarchy;
         if (view.hasHierarchy()) {
             hierarchy = view.getHierarchy();
-            hierarchy.setPlaceholderImage(placeholderDrawable,scaleType);//加载中显示的图片
-            hierarchy.setFailureImage(failureDrawable,scaleType);//加载失败时显示的图片
-            hierarchy.setRetryImage(retryDrawable,scaleType);//重新加载时显示的图片
+            hierarchy.setPlaceholderImage(getDrawable(placeholderId),scaleType);//加载中显示的图片
+            hierarchy.setFailureImage(getDrawable(failureId),scaleType);//加载失败时显示的图片
+            hierarchy.setRetryImage(getDrawable(retryId),scaleType);//重新加载时显示的图片
         } else {
             hierarchy = new GenericDraweeHierarchyBuilder(view.getResources())
-                    .setPlaceholderImage(placeholderDrawable,scaleType)
-                    .setFailureImage(failureDrawable,scaleType)
-                    .setRetryImage(retryDrawable,scaleType)
+                    .setPlaceholderImage(getDrawable(placeholderId),scaleType)
+                    .setFailureImage(getDrawable(failureId),scaleType)
+                    .setRetryImage(getDrawable(retryId),scaleType)
                     .build();
             view.setHierarchy(hierarchy);
         }

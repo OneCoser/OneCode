@@ -124,6 +124,12 @@
         <attr name="pressedColor" format="color" />
     </declare-styleable>
 
+    <declare-styleable name="SlipBtView">
+        <attr name="sbv_btColor" format="color" />
+        <attr name="sbv_closeColor" format="color" />
+        <attr name="sbv_openColor" format="color" />
+    </declare-styleable>
+
     <declare-styleable name="CircleProgressBar">
         <attr name="progress_complete_color" format="color"/>
         <attr name="progress_uncomplete_color" format="color"/>

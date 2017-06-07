@@ -8,16 +8,14 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.TextView;
-
+import android.view.View;
 import chenhao.lib.onecode.R;
 
-
-public class SlipBtView extends TextView {
+public class SlipBtView extends View {
 
     private float dp=0;
 	private boolean IsOpen=false;
-    private int defaultColor,pressedColor;
+    private int btColor,closeColor,openColor;
     private SlipChangeListener changeListener;
 
     public SlipBtView(Context context) {
@@ -37,10 +35,11 @@ public class SlipBtView extends TextView {
 
     private void init(AttributeSet attrs, int defStyle) {
         dp=getResources().getDisplayMetrics().density;
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FilletStrokeView, defStyle, 0);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SlipBtView, defStyle, 0);
         if (null!=a){
-            defaultColor=a.getColor(R.styleable.FilletStrokeView_filletColor, Color.parseColor("#aaaaaa"));
-            pressedColor=a.getColor(R.styleable.FilletStrokeView_pressedColor, Color.BLACK);
+            btColor=a.getColor(R.styleable.SlipBtView_sbv_btColor, Color.WHITE);
+            closeColor=a.getColor(R.styleable.SlipBtView_sbv_closeColor, Color.parseColor("#666666"));
+            openColor=a.getColor(R.styleable.SlipBtView_sbv_openColor, Color.BLACK);
             a.recycle();
         }
         this.setBackgroundColor(Color.TRANSPARENT);
@@ -104,9 +103,9 @@ public class SlipBtView extends TextView {
         Paint paint=new Paint();
         paint.setAntiAlias(true);
         if (IsOpen){
-            paint.setColor(pressedColor);
+            paint.setColor(openColor);
         }else{
-            paint.setColor(defaultColor);
+            paint.setColor(closeColor);
         }
         paint.setStyle(Paint.Style.FILL);
         canvas.drawRoundRect(new RectF(0, 0, getWidth(), getHeight()), getHeight()/2, getHeight()/2, paint);
@@ -134,7 +133,7 @@ public class SlipBtView extends TextView {
             btL=openL;
             btR=openR;
         }
-        paint.setColor(Color.WHITE);
+        paint.setColor(btColor);
         canvas.drawRoundRect(new RectF(btL,v2,btR,getHeight()-v2),btWH,btWH,paint);
         super.onDraw(canvas);
     }
