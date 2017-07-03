@@ -2,7 +2,9 @@ package com.chenhao.onecode;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,12 @@ import chenhao.lib.onecode.base.RefreshBaseActivity;
 import chenhao.lib.onecode.image.AlbumListActivity;
 import chenhao.lib.onecode.image.GetPhotoInfo;
 import chenhao.lib.onecode.utils.LayoutManagerUtil;
+import chenhao.lib.onecode.utils.StringUtils;
+import chenhao.lib.onecode.utils.UiUtil;
 import chenhao.lib.onecode.video.VideoListActivity;
+import chenhao.lib.onecode.view.AlertEdit;
+import chenhao.lib.onecode.view.AlertItem;
+import chenhao.lib.onecode.view.AlertMsg;
 import chenhao.lib.onecode.view.TitleView;
 
 /**
@@ -57,9 +64,9 @@ public class OneCodeActivity extends RefreshBaseActivity<String>{
                 List<String> data=new ArrayList<String>();
                 data.add("选照片");
                 data.add("选视频");
-                data.add("Item3");
-                data.add("Item4");
-                data.add("Item5");
+                data.add("提示框");
+                data.add("编辑框");
+                data.add("选择框");
                 data.add("Item6");
                 data.add("Item7");
                 data.add("Item8");
@@ -93,6 +100,46 @@ public class OneCodeActivity extends RefreshBaseActivity<String>{
                             break;
                         case 1:
                             VideoListActivity.get(OneCodeActivity.this);
+                            break;
+                        case 2:
+                            new AlertMsg(OneCodeActivity.this, new AlertMsg.OnAlertMsgListener() {
+                                @Override
+                                public boolean onClick(boolean isLeft) {
+                                    if (isLeft){
+                                        UiUtil.init().toast("是");
+                                    }
+                                    return true;
+                                }
+                            }).setMsg("你是不是傻逼？","你说呢？","滚").createShow();
+                            break;
+                        case 3:
+                            new AlertEdit(OneCodeActivity.this, new AlertEdit.OnAlertEditListener() {
+                                @Override
+                                public void initEditView(EditText edit) {
+                                    edit.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                    edit.setHint("请填写手机号");
+                                    edit.setMaxLines(1);
+                                }
+                                @Override
+                                public boolean onSubmit(String s) {
+                                    if (StringUtils.isMobile(s)){
+                                        UiUtil.init().toast(s);
+                                        return true;
+                                    }else{
+                                        UiUtil.init().toast("请输入正确手机号");
+                                        return false;
+                                    }
+                                }
+                            }).setButton(true,"提交","取消").createShow();
+                            break;
+                        case 4:
+                            new AlertItem(OneCodeActivity.this, new AlertItem.OnAlertItemListener() {
+                                @Override
+                                public boolean onClick(int index, String s) {
+                                    UiUtil.init().toast(s);
+                                    return true;
+                                }
+                            }).setItems(new String[]{"哈哈","呵呵","嘿嘿","啪啪"}).createShow();
                             break;
                     }
                 }

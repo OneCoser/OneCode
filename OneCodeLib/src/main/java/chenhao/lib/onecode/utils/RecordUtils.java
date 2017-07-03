@@ -6,10 +6,8 @@ import android.media.MediaRecorder;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-
 import java.io.File;
-
-import chenhao.lib.onecode.view.Alert;
+import chenhao.lib.onecode.view.AlertMsg;
 
 public class RecordUtils {
 
@@ -79,9 +77,7 @@ public class RecordUtils {
             if (mContext.getPackageManager().checkPermission("android.permission.RECORD_AUDIO", mContext.getPackageName()) == PackageManager.PERMISSION_DENIED) {
                 isSuccess = false;
                 this.stopRecord(true);
-                new Alert.Builder(mContext)
-                        .setMessage("应用录音权限被禁用，请到设置里更改")
-                        .setLeftButton("确定", null).createShow();
+                new AlertMsg(mContext,null).setMsg("应用录音权限被禁用，请到设置里更改","确定","").createShow();
             } else {
                 try {
                     mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -95,9 +91,7 @@ public class RecordUtils {
                     e.printStackTrace();
                     isSuccess = false;
                     this.stopRecord(true);
-                    new Alert.Builder(mContext)
-                            .setMessage("应用录音权限被禁用，请到设置里更改")
-                            .setLeftButton("确定", null).createShow();
+                    new AlertMsg(mContext,null).setMsg("应用录音权限被禁用，请到设置里更改","确定","").createShow();
                 }
             }
         }

@@ -13,6 +13,8 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.GZIPOutputStream;
 
 public class StringUtils {
@@ -133,6 +135,22 @@ public class StringUtils {
                     || startWithTag(str, "18");
         }
         return one;
+    }
+
+    public static boolean isEmail(Object o){
+        boolean b=isNotEmpty(o)&&o.toString().contains("@");
+        if (b){
+            try{
+                String check = "^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+                Pattern regex = Pattern.compile(check);
+                Matcher matcher = regex.matcher(o.toString());
+                b = matcher.matches();
+            }catch(Exception e){
+                e.printStackTrace();
+                b = false;
+            }
+        }
+        return b;
     }
 
     public static String MD5(String plainText) {

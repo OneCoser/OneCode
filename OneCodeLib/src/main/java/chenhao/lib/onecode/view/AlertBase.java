@@ -1,7 +1,7 @@
 package chenhao.lib.onecode.view;
 
-import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.view.View;
@@ -10,43 +10,54 @@ import android.view.WindowManager;
 
 /**
  * Created by onecode on 16/6/4.
+ * 自定义对话框父类
  */
 public abstract class AlertBase{
 
-    public Activity context;
-    public boolean cancel = true;
-    public boolean canceledTouchOutside = false;
+    public Context context;
+    public boolean cancel = true,canceledTouchOutside = false,closeClean=false;
     public DialogInterface.OnDismissListener dismissListener;
     public DialogInterface.OnCancelListener cancelListener;
     public DialogInterface.OnShowListener showListener;
     public DialogInterface.OnKeyListener keyListener;
 
-    public AlertBase(Activity activity) {
-        this.context = activity;
+    public AlertBase(Context c) {
+        this.context = c;
     }
 
-    public void setOnDismissListener(DialogInterface.OnDismissListener listener) {
+    public AlertBase setOnDismissListener(DialogInterface.OnDismissListener listener) {
         this.dismissListener = listener;
+        return this;
     }
 
-    public void setOnCancelListener(DialogInterface.OnCancelListener listener) {
+    public AlertBase setOnCancelListener(DialogInterface.OnCancelListener listener) {
         this.cancelListener = listener;
+        return this;
     }
 
-    public void setOnShowListener(DialogInterface.OnShowListener listener) {
+    public AlertBase setOnShowListener(DialogInterface.OnShowListener listener) {
         this.showListener = listener;
+        return this;
     }
 
-    public void setOnKeyListener(DialogInterface.OnKeyListener listener) {
+    public AlertBase setOnKeyListener(DialogInterface.OnKeyListener listener) {
         this.keyListener = listener;
+        return this;
     }
 
-    public void setCanceledOnTouchOutside(boolean b) {
+    public AlertBase setCanceledOnTouchOutside(boolean b) {
         this.canceledTouchOutside = b;
+        return this;
     }
 
-    public void setCancelable(boolean b) {
+    public AlertBase setCancelable(boolean b) {
         this.cancel = b;
+        return this;
+    }
+
+    public AlertBase setCloseClean(boolean b){
+        this.closeClean=b;
+        return this;
     }
 
     public Dialog dialog;
@@ -87,6 +98,28 @@ public abstract class AlertBase{
 
     public void createDialogInit(View layout, Dialog d){
 
+    }
+
+    public abstract AlertBase create();
+
+    public void createShow() {
+        create().show();
+    }
+
+    public void show(){
+        if (null!=dialog&&!dialog.isShowing()){
+            dialog.show();
+        }
+    }
+
+    public void close(){
+        if (null!=dialog){
+            dialog.dismiss();
+            if (closeClean){
+                dialog.cancel();
+                dialog=null;
+            }
+        }
     }
 
 }

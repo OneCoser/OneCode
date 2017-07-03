@@ -5,89 +5,96 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import chenhao.lib.onecode.R;
 import chenhao.lib.onecode.utils.StringUtils;
 
-public class AlertEdit extends AlertBase {
+public class AlertMsg extends AlertBase {
 
-    public interface OnAlertEditListener {
-        void initEditView(EditText et);
-
-        boolean onSubmit(String s);
+    public interface OnAlertMsgListener{
+        boolean onClick(boolean isLeft);
     }
 
-    private EditText editText;
-    private boolean submitLeft;
-    private String leftStr, rightStr;
-    private OnAlertEditListener editListener;
+    private View contentView;
+    private String message,leftStr,rightStr;
+    private OnAlertMsgListener msgListener;
 
-    public AlertEdit(Context c, OnAlertEditListener listener) {
+    public AlertMsg(Context c, OnAlertMsgListener listener) {
         super(c);
-        this.editListener = listener;
         setCloseClean(true);
+        this.msgListener=listener;
     }
 
     @Override
     public AlertBase create() {
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        createDialog(R.layout.onecode_alert_edit, params);
+        createDialog(R.layout.onecode_alert_msg, params);
         return this;
     }
 
-    public AlertEdit setButton(boolean submitLeft, String leftStr, String rightStr) {
-        this.submitLeft = submitLeft;
-        this.leftStr = leftStr;
-        this.rightStr = rightStr;
+    public AlertMsg setMsg(View msgView, String leftStr, String rightStr){
+        this.message="";
+        this.contentView=msgView;
+        this.leftStr=leftStr;
+        this.rightStr=rightStr;
+        return this;
+    }
+
+    public AlertMsg setMsg(String message, String leftStr, String rightStr){
+        this.contentView=null;
+        this.message=message;
+        this.leftStr=leftStr;
+        this.rightStr=rightStr;
         return this;
     }
 
     @Override
     public void createDialogInit(View layout, Dialog d) {
         super.createDialogInit(layout, d);
-        editText = (EditText) layout.findViewById(R.id.alert_content);
-        if (null != editListener) {
-            editListener.initEditView(editText);
+        if (null!=contentView){
+            ((LinearLayout)layout.findViewById(R.id.alert_content)).removeAllViews();
+            ((LinearLayout)layout.findViewById(R.id.alert_content)).addView(contentView);
+        }else{
+            if (StringUtils.isEmpty(message)) {
+                message="未知提示";
+            }
+            ((TextView) layout.findViewById(R.id.alert_msg)).setText(message);
         }
-        int btCount = 0;
+        int btCount=0;
         if (StringUtils.isEmpty(leftStr)) {
             layout.findViewById(R.id.alert_bt_left).setVisibility(View.GONE);
-        } else {
-            btCount += 1;
+        }else {
+            btCount+=1;
             layout.findViewById(R.id.alert_bt_left).setVisibility(View.VISIBLE);
             ((Button) layout.findViewById(R.id.alert_bt_left)).setText(leftStr);
             layout.findViewById(R.id.alert_bt_left)
                     .setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
-                            if (submitLeft) {
-                                if (null == editListener || editListener.onSubmit(editText.getText().toString())) {
-                                    close();
-                                }
-                            } else {
+                            if (null==msgListener||msgListener.onClick(true)){
                                 close();
                             }
                         }
                     });
         }
+        //设置确定按钮
         if (StringUtils.isEmpty(rightStr)) {
             layout.findViewById(R.id.alert_bt_right).setVisibility(View.GONE);
-        } else {
-            btCount += 1;
+        }else {
+            btCount+=1;
             layout.findViewById(R.id.alert_bt_right).setVisibility(View.VISIBLE);
             ((Button) layout.findViewById(R.id.alert_bt_right)).setText(rightStr);
             layout.findViewById(R.id.alert_bt_right)
                     .setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
-                            if (submitLeft) {
-                                close();
-                            } else if (null == editListener || editListener.onSubmit(editText.getText().toString())) {
+                            if (null==msgListener||msgListener.onClick(false)){
                                 close();
                             }
                         }
                     });
         }
-        if (btCount == 2) {
+        if (btCount==2) {
             layout.findViewById(R.id.alert_bt_line).setVisibility(View.VISIBLE);
         } else {
             layout.findViewById(R.id.alert_bt_line).setVisibility(View.GONE);

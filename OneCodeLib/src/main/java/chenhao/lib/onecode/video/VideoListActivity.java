@@ -2,7 +2,6 @@ package chenhao.lib.onecode.video;
 
 import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -18,7 +17,6 @@ import org.simple.eventbus.Subscriber;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import chenhao.lib.onecode.OneCode;
 import chenhao.lib.onecode.R;
 import chenhao.lib.onecode.base.BaseViewHolder;
@@ -157,22 +155,22 @@ public class VideoListActivity extends RefreshBaseActivity<Video>{
                 @Override
                 public void onClick(View view) {
                     if (null!=item){
-                        new AlertItem.Builder(VideoListActivity.this)
-                                .setItems(new String[]{"播放视频", "确定选择", "取消"}, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        if (i==0){
-                                            if (null== OneCode.getConfig()||!OneCode.getConfig().goVideoPlay(item)){
-                                                Intent intent = new Intent(Intent.ACTION_VIEW);
-                                                intent.setDataAndType(Uri.parse(item.path),"video/mp4");
-                                                VideoListActivity.this.startActivity(intent);
-                                            }
-                                        }else if(i==1){
-                                            setResult(RESULT_OK, new Intent().putExtra("data", item));
-                                            finish();
-                                        }
+                        new AlertItem(VideoListActivity.this, new AlertItem.OnAlertItemListener() {
+                            @Override
+                            public boolean onClick(int i, String s) {
+                                if (i==0){
+                                    if (null== OneCode.getConfig()||!OneCode.getConfig().goVideoPlay(item)){
+                                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                                        intent.setDataAndType(Uri.parse(item.path),"video/mp4");
+                                        VideoListActivity.this.startActivity(intent);
                                     }
-                                }).createShow();
+                                }else if(i==1){
+                                    setResult(RESULT_OK, new Intent().putExtra("data", item));
+                                    finish();
+                                }
+                                return true;
+                            }
+                        }).setItems(new String[]{"播放视频", "确定选择", "取消"}).createShow();
                     }
                 }
             });
