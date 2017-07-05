@@ -52,17 +52,17 @@ public class GetPhotoInfo implements Parcelable {
         return info;
     }
 
-    public static GetPhotoInfo getResumeHeadInfo(){
+    public static GetPhotoInfo getMoreInfo(int has,int max){
         GetPhotoInfo info=new GetPhotoInfo();
         info.onlyCamera=false;
         info.canCamera=true;
-        info.hasCount=0;
-        info.maxCount=1;
-        info.selectOnly=true;
-        info.needCrop=true;
+        info.hasCount=has;
+        info.maxCount=max;
+        info.selectOnly=false;
+        info.needCrop=false;
         info.cropWidth=250;
-        info.cropHeight=350;
-        info.cropIsFixed=true;
+        info.cropHeight=250;
+        info.cropIsFixed=false;
         return info;
     }
 

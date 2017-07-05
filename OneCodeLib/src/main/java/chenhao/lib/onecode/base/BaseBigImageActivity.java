@@ -4,20 +4,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import com.facebook.drawee.drawable.ScalingUtils;
 import java.util.ArrayList;
 import java.util.List;
 import chenhao.lib.onecode.R;
 import chenhao.lib.onecode.image.Image;
 import chenhao.lib.onecode.utils.ImageShow;
-import chenhao.lib.onecode.utils.StringUtils;
-import chenhao.lib.onecode.view.LargeDraweeView;
 import chenhao.lib.onecode.view.SimlpViewPager;
 import chenhao.lib.onecode.view.TitleView;
 import uk.co.senab.photoview.PhotoView;
@@ -99,61 +93,64 @@ public abstract class BaseBigImageActivity extends BaseActivity {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            String url=images.get(position).checkUrl();
-            PhotoView photoView=new PhotoView(BaseBigImageActivity.this);
-            photoView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            photoView.setOnViewTapListener(onViewTapListener);
-            photoView.setTag(url);
-            container.addView(photoView);
-            ImageShow.loadImage(photoView,url);
-            return photoView;
+            return initImageView(container,position,images.get(position).checkUrl());
         }
 
     }
 
-    private View getShowView(String url){
-        if (StringUtils.startWithHttp(url)|| StringUtils.startWithTag(url,"res:")){
-            ScrollView view=new ScrollView(BaseBigImageActivity.this);
-            view.setVerticalScrollBarEnabled(false);
-            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            LinearLayout layout=new LinearLayout(BaseBigImageActivity.this);
-            view.addView(layout,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            layout.setOrientation(LinearLayout.VERTICAL);
-            layout.setMinimumHeight(screenH);
-            layout.setGravity(Gravity.CENTER);
-            LargeDraweeView draweeView=new LargeDraweeView(BaseBigImageActivity.this);
-            draweeView.setAutoHeight(true);
-            layout.addView(draweeView,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,screenH));
-            ImageShow.setHierarchyDefault(draweeView);
-            draweeView.getHierarchy().setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER);
-            draweeView.setOnLongClickListener(onLongClickListener);
-            draweeView.setOnClickListener(onClickListener);
-            draweeView.setTag(url);
-            ImageShow.loadLarge(draweeView,url,true);
-//            container.addView(view);
-            return view;
-        }else{
-            if (StringUtils.startWithTag(url,"file://")){
-                url=url.replace("file://","");
-            }
-            PhotoView photoView=new PhotoView(BaseBigImageActivity.this);
-            photoView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            photoView.setOnViewTapListener(onViewTapListener);
-            photoView.setTag(url);
-//            container.addView(photoView);
-            ImageShow.loadImage(photoView,url);
-            return photoView;
-        }
+    public View initImageView(ViewGroup container,int position,String url){
+        PhotoView photoView=new PhotoView(BaseBigImageActivity.this);
+        photoView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        photoView.setOnLongClickListener(onLongClickListener);
+        photoView.setOnViewTapListener(onViewTapListener);
+        photoView.setTag(url);
+        container.addView(photoView);
+        ImageShow.loadImage(photoView,url);
+        return photoView;
     }
 
-    private View.OnClickListener onClickListener=new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            setVis(titleView,titleView.getVisibility()== View.GONE? View.VISIBLE: View.GONE);
-        }
-    };
+//    private View getShowView(String url){
+//        if (StringUtils.startWithHttp(url)|| StringUtils.startWithTag(url,"res:")){
+//            ScrollView view=new ScrollView(BaseBigImageActivity.this);
+//            view.setVerticalScrollBarEnabled(false);
+//            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//            LinearLayout layout=new LinearLayout(BaseBigImageActivity.this);
+//            view.addView(layout,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//            layout.setOrientation(LinearLayout.VERTICAL);
+//            layout.setMinimumHeight(screenH);
+//            layout.setGravity(Gravity.CENTER);
+//            LargeDraweeView draweeView=new LargeDraweeView(BaseBigImageActivity.this);
+//            draweeView.setAutoHeight(true);
+//            layout.addView(draweeView,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,screenH));
+//            ImageShow.setHierarchyDefault(draweeView);
+//            draweeView.getHierarchy().setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER);
+//            draweeView.setOnLongClickListener(onLongClickListener);
+//            draweeView.setOnClickListener(onClickListener);
+//            draweeView.setTag(url);
+//            ImageShow.loadLarge(draweeView,url,true);
+////            container.addView(view);
+//            return view;
+//        }else{
+//            if (StringUtils.startWithTag(url,"file://")){
+//                url=url.replace("file://","");
+//            }
+//            PhotoView photoView=new PhotoView(BaseBigImageActivity.this);
+//            photoView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//            photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+//            photoView.setOnViewTapListener(onViewTapListener);
+//            photoView.setTag(url);
+////            container.addView(photoView);
+//            ImageShow.loadImage(photoView,url);
+//            return photoView;
+//        }
+//    }
+//    private View.OnClickListener onClickListener=new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            setVis(titleView,titleView.getVisibility()== View.GONE? View.VISIBLE: View.GONE);
+//        }
+//    };
 
     private PhotoViewAttacher.OnViewTapListener onViewTapListener=new PhotoViewAttacher.OnViewTapListener() {
         @Override
@@ -163,15 +160,9 @@ public abstract class BaseBigImageActivity extends BaseActivity {
     };
 
     private View.OnLongClickListener onLongClickListener=new View.OnLongClickListener() {
-        private String imageUrl;
         @Override
         public boolean onLongClick(View v) {
-            imageUrl=v.getTag().toString();
-            if (StringUtils.startWithHttp(imageUrl)){
-                return onLongClickImage(imageUrl);
-            }else{
-                return false;
-            }
+            return onLongClickImage(null!=v.getTag()?v.getTag().toString():"");
         }
     };
 
