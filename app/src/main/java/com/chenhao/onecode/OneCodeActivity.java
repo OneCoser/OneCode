@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
-import butterknife.Bind;
+import butterknife.BindView;
 import chenhao.lib.onecode.base.BaseViewHolder;
 import chenhao.lib.onecode.base.RefreshBaseActivity;
 import chenhao.lib.onecode.image.AlbumListActivity;
@@ -38,7 +38,7 @@ public class OneCodeActivity extends RefreshBaseActivity<String>{
         return LayoutManagerUtil.getList(this);
     }
 
-    @Bind(R.id.title_view)
+    @BindView(R.id.title_view)
     TitleView titleView;
 
     @Override
@@ -83,7 +83,7 @@ public class OneCodeActivity extends RefreshBaseActivity<String>{
 
     public class ItemTest extends BaseViewHolder<String>{
 
-        @Bind(R.id.test_item)
+        @BindView(R.id.test_item)
         TextView item;
 
         private int index;

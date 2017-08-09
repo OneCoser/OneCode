@@ -21,18 +21,8 @@ import chenhao.lib.onecode.OneCode;
 
 public class ProjectCheck {
 
-    public static ProjectCheck project;
-    public static void init(String n){
-        if (null==project){
-            project=new ProjectCheck(n);
-        }
-    }
-
-    public static boolean OK(){
-        return null!=project&&project.projectCanUse;
-    }
-
     public String name;
+    public String errorHint;
     public boolean projectCanUse;
 
     public ProjectCheck(String n) {
@@ -81,6 +71,7 @@ public class ProjectCheck {
             JSONObject doc=new JSONObject();
             doc.put("name",name);
             doc.put("projectCanUse",projectCanUse);
+            doc.put("errorHint","此项目已被禁用!\n请联系项目框架搭建人员!");
             params.put("doc",doc);
         }catch (Exception e){
             e.printStackTrace();

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import butterknife.Unbinder;
 import chenhao.lib.onecode.OneCode;
 import chenhao.lib.onecode.R;
 
@@ -23,6 +24,7 @@ public abstract class BaseFragment extends Fragment {
     public float dp;
     public int screenW, screenH;
     public View contentView;
+    public Unbinder unbinder;
 
     public abstract void initView();
 
@@ -53,7 +55,10 @@ public abstract class BaseFragment extends Fragment {
             contentView = getContentView(inflater, container, savedInstanceState);
         }
         if (null != contentView) {
-            ButterKnife.bind(this, contentView);
+            if (null!=unbinder){
+                unbinder.unbind();
+            }
+            unbinder=ButterKnife.bind(this, contentView);
         }
         initView();
         return contentView;
@@ -153,7 +158,9 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         HttpClient.init().cancel(this);
-        ButterKnife.unbind(this);
+        if (null!=unbinder){
+            unbinder.unbind();
+        }
         super.onDestroyView();
     }
 
@@ -161,7 +168,9 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroy() {
         EventBus.getDefault().unregister(this);
         HttpClient.init().cancel(this);
-        ButterKnife.unbind(this);
+        if (null!=unbinder){
+            unbinder.unbind();
+        }
         super.onDestroy();
     }
 

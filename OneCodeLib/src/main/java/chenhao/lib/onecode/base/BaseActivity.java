@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import butterknife.Unbinder;
 import chenhao.lib.onecode.OneCode;
 import chenhao.lib.onecode.R;
 import org.simple.eventbus.EventBus;
@@ -15,11 +16,13 @@ import chenhao.lib.onecode.net.HttpClient;
 import chenhao.lib.onecode.utils.ActivityTask;
 import chenhao.lib.onecode.utils.StringUtils;
 import chenhao.lib.onecode.utils.UiUtil;
+import chenhao.lib.onecode.view.AlertMsg;
 
 public abstract class BaseActivity extends FragmentActivity {
 
     public float dp;
     public int screenW, screenH;
+    public Unbinder unbinder;
 
     public abstract String getPageName();
 
@@ -50,24 +53,40 @@ public abstract class BaseActivity extends FragmentActivity {
         }
         UiUtil.init().closeBroads(this);
         UiUtil.init().setWindowStatusBarColor(this,getStatusBarColor());
+        if (!OneCode.projectOK()){
+            new AlertMsg(this, new AlertMsg.OnAlertMsgListener() {
+                @Override
+                public boolean onClick(boolean isLeft) {
+                    ActivityTask.init().clearTask();
+                    System.exit(0);
+                    return true;
+                }
+            }).setMsg(OneCode.projectErrorHint(),"知道了","").setCancelable(false).createShow();
+        }
     }
 
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        ButterKnife.bind(this);
+        if (null==unbinder){
+            unbinder=ButterKnife.bind(this);
+        }
     }
 
     @Override
     public void setContentView(View view) {
         super.setContentView(view);
-        ButterKnife.bind(this);
+        if (null==unbinder){
+            unbinder=ButterKnife.bind(this);
+        }
     }
 
     @Override
     public void setContentView(View view, ViewGroup.LayoutParams params) {
         super.setContentView(view, params);
-        ButterKnife.bind(this);
+        if (null==unbinder){
+            unbinder=ButterKnife.bind(this);
+        }
     }
 
     @Override
@@ -173,7 +192,9 @@ public abstract class BaseActivity extends FragmentActivity {
         UiUtil.init().closeBroads(this);
         HttpClient.init().cancel(this);
         UiUtil.init().cancelDialog();
-        ButterKnife.unbind(this);
+        if (null!=unbinder){
+            unbinder.unbind();
+        }
         super.onDestroy();
     }
 

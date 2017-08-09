@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import butterknife.Bind;
 import chenhao.lib.onecode.refresh.LoadMoreRecyclerView;
 import chenhao.lib.onecode.refresh.PullToRefreshView;
 import chenhao.lib.onecode.utils.UiUtil;
