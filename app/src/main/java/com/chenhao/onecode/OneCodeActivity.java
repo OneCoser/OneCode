@@ -1,5 +1,6 @@
 package com.chenhao.onecode;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
@@ -67,7 +68,7 @@ public class OneCodeActivity extends RefreshBaseActivity<String>{
                 data.add("提示框");
                 data.add("编辑框");
                 data.add("选择框");
-                data.add("Item6");
+                data.add("Pages");
                 data.add("Item7");
                 data.add("Item8");
                 data.add("Item9");
@@ -140,6 +141,9 @@ public class OneCodeActivity extends RefreshBaseActivity<String>{
                                     return true;
                                 }
                             }).setItems(new String[]{"哈哈","呵呵","嘿嘿","啪啪"}).createShow();
+                            break;
+                        case 5:
+                            startActivity(new Intent(OneCodeActivity.this,OneCodePagesActivity.class));
                             break;
                     }
                 }

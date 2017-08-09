@@ -55,9 +55,6 @@ public abstract class BaseFragment extends Fragment {
             contentView = getContentView(inflater, container, savedInstanceState);
         }
         if (null != contentView) {
-            if (null!=unbinder){
-                unbinder.unbind();
-            }
             unbinder=ButterKnife.bind(this, contentView);
         }
         initView();
@@ -158,9 +155,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         HttpClient.init().cancel(this);
-        if (null!=unbinder){
-            unbinder.unbind();
-        }
         super.onDestroyView();
     }
 

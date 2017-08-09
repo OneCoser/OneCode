@@ -59,9 +59,6 @@ public abstract class RefreshBaseFragment<T> extends BaseFragment {
         if (null!=contentView){
             refreshView=findV(contentView,R.id.refresh_view);
             refreshViewLayout=findV(contentView,R.id.refresh_view_layout);
-            if (null!=unbinder){
-                unbinder.unbind();
-            }
             unbinder=ButterKnife.bind(this, contentView);
         }
         if (null!=refreshViewLayout){
