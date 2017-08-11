@@ -110,23 +110,8 @@ public class OneCodeAppConfig implements OneCodeConfig{
     }
 
     @Override
-    public View getSystemStatusLoadingView(Context context, String pageName) {
+    public View getSystemStatusView(Context context, String pageName,int status) {
         return null;
-    }
-
-    @Override
-    public int getSystemStatusNullDataIcon(Context context, String pageName) {
-        return 0;
-    }
-
-    @Override
-    public int getSystemStatusNetErrorIcon(Context context, String pageName) {
-        return 0;
-    }
-
-    @Override
-    public int getSystemStatusApiErrorIcon(Context context, String pageName) {
-        return 0;
     }
 
     @Override

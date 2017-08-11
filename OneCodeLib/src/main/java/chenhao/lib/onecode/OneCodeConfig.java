@@ -45,17 +45,8 @@ public interface OneCodeConfig {
     //加载菊花的布局文件id
     int getDialogResId();
 
-    //页面加载状态显示的View
-    View getSystemStatusLoadingView(Context context,String pageName);
-
-    //页面空数据状态显示的图片id
-    int getSystemStatusNullDataIcon(Context context,String pageName);
-
-    //页面网咯错误状态显示的图片id
-    int getSystemStatusNetErrorIcon(Context context,String pageName);
-
-    //页面接口错误状态显示的图片id
-    int getSystemStatusApiErrorIcon(Context context,String pageName);
+    //页面不同状态需要显示的View
+    View getSystemStatusView(Context context,String pageName,int status);
 
     //缓存路径
     String getCachePath();

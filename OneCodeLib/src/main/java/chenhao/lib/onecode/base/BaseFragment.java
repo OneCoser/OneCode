@@ -8,13 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import butterknife.Unbinder;
 import chenhao.lib.onecode.OneCode;
 import chenhao.lib.onecode.R;
-
 import org.simple.eventbus.EventBus;
-
 import butterknife.ButterKnife;
 import chenhao.lib.onecode.net.HttpClient;
 import chenhao.lib.onecode.utils.StringUtils;
@@ -98,55 +95,44 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void showSystemStatus(int status) {
-        if (null != OneCode.getConfig()) {
-            showSystemStatus(status,
-                    status == SYSTEM_STATUS_NET_ERROR ? OneCode.getConfig().getSystemStatusApiErrorIcon(getActivity(), getPageName()) :
-                            status == SYSTEM_STATUS_API_ERROR ? OneCode.getConfig().getSystemStatusNetErrorIcon(getActivity(), getPageName()) :
-                                    OneCode.getConfig().getSystemStatusNullDataIcon(getActivity(), getPageName()),
-                    OneCode.getConfig().getSystemStatusLoadingView(getActivity(), getPageName()));
-        } else {
-            showSystemStatus(status, 0, null);
-        }
-    }
-
-    public void showSystemStatus(int status, int iconResId, View loadingView) {
         if (null != getSystemStatusLayout()) {
-            if (getSystemStatusLayout().getChildCount() > 0) {
+            if (getSystemStatusLayout().getChildCount()>0){
                 getSystemStatusLayout().removeAllViews();
             }
             if (status == SYSTEM_STATUS_HIDE) {
                 setVis(getSystemStatusLayout(), View.GONE);
-            } else if (status == SYSTEM_STATUS_LOADING) {
-                if (null != loadingView) {
-                    getSystemStatusLayout().addView(loadingView);
-                } else {
-                    getSystemStatusLayout().addView(View.inflate(getActivity(), R.layout.onecode_layout_loading_small, null));
+            } else{
+                View statusView=null!=OneCode.getConfig()?OneCode.getConfig().getSystemStatusView(getActivity(),getPageName(),status):null;
+                if (null==statusView&&status == SYSTEM_STATUS_LOADING){
+                    statusView=View.inflate(getActivity(),R.layout.onecode_layout_loading_small,null);
+                }else if(null==statusView){
+                    ImageView system_status_icon = new ImageView(getSystemStatusLayout().getContext());
+                    int iconResId=status == SYSTEM_STATUS_NET_ERROR||status == SYSTEM_STATUS_API_ERROR?
+                            R.drawable.onecode_default_icon_internet: R.drawable.onecode_default_icon_nothing;
+                    system_status_icon.setImageResource(iconResId);
+                    system_status_icon.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                    statusView=system_status_icon;
+                    statusView.setTag(status);
                 }
-                setVis(getSystemStatusLayout(), View.VISIBLE);
-            } else {
-                ImageView system_status_icon = new ImageView(getSystemStatusLayout().getContext());
-                system_status_icon.setTag(status);
-                if (iconResId == 0) {
-                    iconResId = status == SYSTEM_STATUS_NET_ERROR || status == SYSTEM_STATUS_API_ERROR ?
-                            R.drawable.onecode_default_icon_internet : R.drawable.onecode_default_icon_nothing;
-                }
-                system_status_icon.setImageResource(iconResId);
-                system_status_icon.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                system_status_icon.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int s = SYSTEM_STATUS_NULL_DATA;
-                        try {
-                            if (StringUtils.isNotEmpty(v.getTag().toString())) {
-                                s = Integer.parseInt(v.getTag().toString());
+                if (null!=statusView){
+                    if (status!=SYSTEM_STATUS_LOADING){
+                        statusView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                int s = SYSTEM_STATUS_NULL_DATA;
+                                try {
+                                    if (StringUtils.isNotEmpty(v.getTag().toString())) {
+                                        s = Integer.parseInt(v.getTag().toString());
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                systemStatusAction(s);
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        systemStatusAction(s);
+                        });
                     }
-                });
-                getSystemStatusLayout().addView(system_status_icon);
+                    getSystemStatusLayout().addView(statusView);
+                }
                 setVis(getSystemStatusLayout(), View.VISIBLE);
             }
         }

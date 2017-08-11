@@ -123,57 +123,45 @@ public abstract class BaseActivity extends FragmentActivity {
         return system_status_layout;
     }
 
-
     public void showSystemStatus(int status) {
-        if (null!=OneCode.getConfig()){
-            showSystemStatus(status,
-                            status == SYSTEM_STATUS_NET_ERROR?OneCode.getConfig().getSystemStatusApiErrorIcon(this,getPageName()):
-                                    status == SYSTEM_STATUS_API_ERROR?OneCode.getConfig().getSystemStatusNetErrorIcon(this,getPageName()):
-                                            OneCode.getConfig().getSystemStatusNullDataIcon(this,getPageName()),
-                    OneCode.getConfig().getSystemStatusLoadingView(this,getPageName()));
-        }else{
-            showSystemStatus(status,0,null);
-        }
-    }
-
-    public void showSystemStatus(int status,int iconResId,View loadingView) {
         if (null != getSystemStatusLayout()) {
             if (getSystemStatusLayout().getChildCount()>0){
                 getSystemStatusLayout().removeAllViews();
             }
             if (status == SYSTEM_STATUS_HIDE) {
                 setVis(getSystemStatusLayout(), View.GONE);
-            } else if (status == SYSTEM_STATUS_LOADING) {
-                if (null!=loadingView){
-                    getSystemStatusLayout().addView(loadingView);
-                }else{
-                    getSystemStatusLayout().addView(View.inflate(this,R.layout.onecode_layout_loading_small,null));
-                }
-                setVis(getSystemStatusLayout(), View.VISIBLE);
-            } else {
-                ImageView system_status_icon = new ImageView(getSystemStatusLayout().getContext());
-                system_status_icon.setTag(status);
-                if (iconResId==0){
-                    iconResId=status == SYSTEM_STATUS_NET_ERROR||status == SYSTEM_STATUS_API_ERROR?
+            } else{
+                View statusView=null!=OneCode.getConfig()?OneCode.getConfig().getSystemStatusView(this,getPageName(),status):null;
+                if (null==statusView&&status == SYSTEM_STATUS_LOADING){
+                    statusView=View.inflate(this,R.layout.onecode_layout_loading_small,null);
+                }else if(null==statusView){
+                    ImageView system_status_icon = new ImageView(getSystemStatusLayout().getContext());
+                    int iconResId=status == SYSTEM_STATUS_NET_ERROR||status == SYSTEM_STATUS_API_ERROR?
                             R.drawable.onecode_default_icon_internet: R.drawable.onecode_default_icon_nothing;
+                    system_status_icon.setImageResource(iconResId);
+                    system_status_icon.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                    statusView=system_status_icon;
+                    statusView.setTag(status);
                 }
-                system_status_icon.setImageResource(iconResId);
-                system_status_icon.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                system_status_icon.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int s = SYSTEM_STATUS_NULL_DATA;
-                        try {
-                            if (StringUtils.isNotEmpty(v.getTag().toString())) {
-                                s = Integer.parseInt(v.getTag().toString());
+                if (null!=statusView){
+                    if (status!=SYSTEM_STATUS_LOADING){
+                        statusView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                int s = SYSTEM_STATUS_NULL_DATA;
+                                try {
+                                    if (StringUtils.isNotEmpty(v.getTag().toString())) {
+                                        s = Integer.parseInt(v.getTag().toString());
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                systemStatusAction(s);
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        systemStatusAction(s);
+                        });
                     }
-                });
-                getSystemStatusLayout().addView(system_status_icon);
+                    getSystemStatusLayout().addView(statusView);
+                }
                 setVis(getSystemStatusLayout(), View.VISIBLE);
             }
         }
