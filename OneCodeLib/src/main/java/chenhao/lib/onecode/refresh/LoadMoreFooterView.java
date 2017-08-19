@@ -67,8 +67,8 @@ public class LoadMoreFooterView extends LinearLayout {
                 break;
             case STATE_COMPLETE:
                 textView.setPadding(0,0,0,0);
-                textView.setVisibility(GONE);
-                progressView.setVisibility(GONE);
+                textView.setVisibility(INVISIBLE);
+                progressView.setVisibility(INVISIBLE);
                 this.setVisibility(View.VISIBLE);
                 break;
             case STATE_NOMORE:
@@ -76,9 +76,9 @@ public class LoadMoreFooterView extends LinearLayout {
                     textView.setPadding(0,p,0,p);
                     textView.setVisibility(VISIBLE);
                 }else{
-                    textView.setVisibility(GONE);
+                    textView.setVisibility(INVISIBLE);
                 }
-                progressView.setVisibility(View.GONE);
+                progressView.setVisibility(View.INVISIBLE);
                 this.setVisibility(View.VISIBLE);
                 break;
         }

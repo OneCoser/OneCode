@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import chenhao.lib.onecode.R;
+import chenhao.lib.onecode.utils.Clog;
+import chenhao.lib.onecode.utils.StringUtils;
 import chenhao.lib.onecode.view.aviloading.AVLoadingIndicatorView;
 
 public class LoadMoreRecyclerView extends RecyclerView {
@@ -60,7 +62,7 @@ public class LoadMoreRecyclerView extends RecyclerView {
         }
         footLoadMoreView = new LoadMoreFooterView(getContext());
         footLoadMoreView.setViewStyle(loadStyle,loadColor,noMoreTxt,noMoreTxtColor);
-        footLoadMoreView.setVisibility(GONE);
+        footLoadMoreView.setVisibility(VISIBLE);
     }
 
     public void setHeaderView(View view) {
@@ -100,7 +102,7 @@ public class LoadMoreRecyclerView extends RecyclerView {
         super.onScrollStateChanged(state);
         if (state == RecyclerView.SCROLL_STATE_IDLE && mLoadingListener != null && !isLoadingData) {
             LayoutManager layoutManager = getLayoutManager();
-            int lastVisibleItemPosition;
+            int lastVisibleItemPosition=0;
             if (layoutManager instanceof GridLayoutManager) {
                 lastVisibleItemPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
             } else if (layoutManager instanceof StaggeredGridLayoutManager) {
@@ -110,9 +112,10 @@ public class LoadMoreRecyclerView extends RecyclerView {
             } else {
                 lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
             }
-            int childCount=layoutManager.getChildCount();
-            int itemCount=layoutManager.getItemCount();
-            if (childCount > 0 && lastVisibleItemPosition >= itemCount - 1 && itemCount > childCount && hasMore) {
+            int count1=layoutManager.getChildCount();
+            int count2=layoutManager.getItemCount();
+            Clog.i("count1："+count1+"——count2："+count2+"——lastVisibleItemPosition："+lastVisibleItemPosition);
+            if (hasMore&&count1>0&&count1<count2&&lastVisibleItemPosition>=count2-1) {
                 isLoadingData = true;
                 if (null!=footLoadMoreView){
                     footLoadMoreView.setState(LoadMoreFooterView.STATE_LAODING);

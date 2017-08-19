@@ -139,37 +139,36 @@ public abstract class RefreshBaseFragment<T> extends BaseFragment {
     }
 
     public void onDataSuccess(List<T> newData, int status, boolean more, Comparator<T> comparator) {
-        if (null==getRefreshView()){
-            return;
-        }
-        isLoading = false;
-        if (null == list) {
-            list = new ArrayList<>();
-        }
-        this.hasMore=more;
-        if (isclearList) {
-            list.clear();
-            if (adapter != null) {
-                adapter.notifyDataSetChanged();
+        if (null!=getRefreshView()){
+            isLoading = false;
+            if (null == list) {
+                list = new ArrayList<>();
             }
-        }
-        setRefreshing(false);
-        if (null != newData && newData.size() > 0) {
-            int positionStart = list.size();
-            list.addAll(newData);
-            if (list.size()>1&&null!=comparator){
-                Collections.sort(list,comparator);
+            this.hasMore=more;
+            if (isclearList) {
+                list.clear();
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
             }
-            if (adapter != null) {
-                adapter.notifyItemRangeInserted(positionStart, newData.size());
-            } else {
-                adapter = new RefreshBaseAdapter();
-                refreshView.setAdapter(adapter);
+            setRefreshing(false);
+            if (null != newData && newData.size() > 0) {
+                int positionStart = list.size();
+                list.addAll(newData);
+                if (list.size()>1&&null!=comparator){
+                    Collections.sort(list,comparator);
+                }
+                if (adapter != null) {
+                    adapter.notifyItemRangeInserted(positionStart, newData.size());
+                } else {
+                    adapter = new RefreshBaseAdapter();
+                    refreshView.setAdapter(adapter);
+                }
             }
+            refreshView.loadMoreComplete(hasMore,canShowNoMore());
+            UiUtil.init().cancelDialog();
+            showSystemStatus(list.size()<=0?status:SYSTEM_STATUS_HIDE);
         }
-        refreshView.loadMoreComplete(hasMore,canShowNoMore());
-        UiUtil.init().cancelDialog();
-        showSystemStatus(list.size()<=0?status:SYSTEM_STATUS_HIDE);
     }
 
     public void refreshAdapter(int start,int count){
