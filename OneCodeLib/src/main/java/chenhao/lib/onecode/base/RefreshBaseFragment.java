@@ -18,7 +18,7 @@ import chenhao.lib.onecode.utils.UiUtil;
 
 public abstract class RefreshBaseFragment<T> extends BaseFragment {
 
-    public int nowPage,LOAD_COUNT= 20,REAL_DATA_COUNT=0;
+    public int nowPage,LOAD_COUNT= 20;
     public RefreshBaseAdapter adapter;
     public List<T> list = new ArrayList<>();
     public boolean hasMore = true, isclearList = false, isLoading = false,isRealDataCount=false;
@@ -101,26 +101,23 @@ public abstract class RefreshBaseFragment<T> extends BaseFragment {
     public void loadData(boolean getMore,boolean isUser) {
         if (isLoading) {
             onDataSuccess(null,SYSTEM_STATUS_HIDE);
-            return;
-        }
-        if (null!=refreshView){
-            refreshView.setRefreshState(true);
-        }
-        isclearList = !getMore;
-        isLoading = true;
-        if (!isRealDataCount){
-            REAL_DATA_COUNT=null!=list?list.size():0;
-        }
-        if (getMore) {
-            nowPage = REAL_DATA_COUNT / LOAD_COUNT;
-            if (REAL_DATA_COUNT % LOAD_COUNT != 0) {
-                nowPage += 1;
+        }else{
+            if (null!=refreshView){
+                refreshView.setRefreshState(true);
             }
-            nowPage += 1;
-        } else {
-            nowPage = 1;
-            if (!isUser){
-                showSystemStatus(SYSTEM_STATUS_LOADING);
+            isclearList = !getMore;
+            isLoading = true;
+            if (getMore) {
+                nowPage = list.size() / LOAD_COUNT;
+                if (list.size() % LOAD_COUNT != 0) {
+                    nowPage += 1;
+                }
+                nowPage += 1;
+            } else {
+                nowPage = 1;
+                if (!isUser){
+                    showSystemStatus(SYSTEM_STATUS_LOADING);
+                }
             }
         }
     }
@@ -172,16 +169,7 @@ public abstract class RefreshBaseFragment<T> extends BaseFragment {
         }
         refreshView.loadMoreComplete(hasMore,canShowNoMore());
         UiUtil.init().cancelDialog();
-        REAL_DATA_COUNT=null!=list?list.size():0;
         showSystemStatus(list.size()<=0?status:SYSTEM_STATUS_HIDE);
-    }
-
-    public void checkRealDataCount(int count){
-        if (isclearList){
-            REAL_DATA_COUNT=count;
-        }else{
-            REAL_DATA_COUNT+=count;
-        }
     }
 
     public void refreshAdapter(int start,int count){

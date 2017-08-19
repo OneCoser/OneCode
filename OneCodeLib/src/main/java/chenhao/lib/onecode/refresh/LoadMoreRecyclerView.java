@@ -110,7 +110,9 @@ public class LoadMoreRecyclerView extends RecyclerView {
             } else {
                 lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
             }
-            if (layoutManager.getChildCount() > 0 && lastVisibleItemPosition >= layoutManager.getItemCount() - 1 && layoutManager.getItemCount() > layoutManager.getChildCount() && hasMore) {
+            int childCount=layoutManager.getChildCount();
+            int itemCount=layoutManager.getItemCount();
+            if (childCount > 0 && lastVisibleItemPosition >= itemCount - 1 && itemCount > childCount && hasMore) {
                 isLoadingData = true;
                 if (null!=footLoadMoreView){
                     footLoadMoreView.setState(LoadMoreFooterView.STATE_LAODING);

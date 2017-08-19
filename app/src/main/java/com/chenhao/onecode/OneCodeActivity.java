@@ -69,10 +69,10 @@ public class OneCodeActivity extends RefreshBaseActivity<String>{
                 data.add("编辑框");
                 data.add("选择框");
                 data.add("Pages");
-                data.add("Item7");
-                data.add("Item8");
-                data.add("Item9");
-                onDataSuccess(data,SYSTEM_STATUS_NULL_DATA,false);
+                for (int i=1;i<LOAD_COUNT;i++){
+                    data.add("Item"+i);
+                }
+                onDataSuccess(data,SYSTEM_STATUS_NULL_DATA);
             }
         },3000);
     }

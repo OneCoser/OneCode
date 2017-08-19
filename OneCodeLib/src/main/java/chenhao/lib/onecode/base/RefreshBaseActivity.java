@@ -75,21 +75,21 @@ public abstract class RefreshBaseActivity<T> extends BaseActivity {
     public void loadData(boolean getMore,boolean isUser) {
         if (isLoading) {
             showSystemStatus(SYSTEM_STATUS_LOADING);
-            return;
-        }
-        refreshView.setRefreshState(true);
-        isclearList = !getMore;
-        isLoading = true;
-        if (getMore) {
-            nowPage = list.size() / LOAD_COUNT;
-            if (list.size() % LOAD_COUNT != 0) {
+        }else{
+            refreshView.setRefreshState(true);
+            isclearList = !getMore;
+            isLoading = true;
+            if (getMore) {
+                nowPage = list.size() / LOAD_COUNT;
+                if (list.size() % LOAD_COUNT != 0) {
+                    nowPage += 1;
+                }
                 nowPage += 1;
-            }
-            nowPage += 1;
-        } else {
-            nowPage = 1;
-            if (!isUser){
-                showSystemStatus(SYSTEM_STATUS_LOADING);
+            } else {
+                nowPage = 1;
+                if (!isUser){
+                    showSystemStatus(SYSTEM_STATUS_LOADING);
+                }
             }
         }
     }
