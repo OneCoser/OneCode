@@ -62,7 +62,7 @@ public class LoadMoreRecyclerView extends RecyclerView {
         }
         footLoadMoreView = new LoadMoreFooterView(getContext());
         footLoadMoreView.setViewStyle(loadStyle,loadColor,noMoreTxt,noMoreTxtColor);
-        footLoadMoreView.setVisibility(VISIBLE);
+        footLoadMoreView.setState(LoadMoreFooterView.STATE_COMPLETE);
     }
 
     public void setHeaderView(View view) {
