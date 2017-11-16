@@ -2,23 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:background="@drawable/onecode_alert_bg"
     android:minHeight="150dp"
     android:minWidth="250dp"
     android:orientation="vertical">
 
-
     <LinearLayout
         android:id="@+id/alert_content"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@null"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="5dp">
-
 
         <TextView
             android:id="@+id/alert_msg"
@@ -31,27 +30,31 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/alert_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#eeeeee" />
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_weight="0"
         android:background="@android:color/transparent"
         android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
+        <chenhao.lib.onecode.view.FilletBtView
             android:id="@+id/alert_bt_left"
             android:layout_width="100dp"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:singleLine="true"
+            android:maxLines="1"
             android:textColor="#333333"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:gravity="center"
+            app:fillet="2dp"
+            app:filletColor="@android:color/transparent"
+            app:pressedColor="#fafafa"/>
 
         <TextView
             android:id="@+id/alert_bt_line"
@@ -59,15 +62,18 @@
             android:layout_height="match_parent"
             android:background="#eeeeee" />
 
-        <Button
+        <chenhao.lib.onecode.view.FilletBtView
             android:id="@+id/alert_bt_right"
             android:layout_width="100dp"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:singleLine="true"
+            android:maxLines="1"
             android:textColor="#333333"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:gravity="center"
+            app:fillet="2dp"
+            app:filletColor="@android:color/transparent"
+            app:pressedColor="#fafafa"/>
     </LinearLayout>
 
 </LinearLayout>

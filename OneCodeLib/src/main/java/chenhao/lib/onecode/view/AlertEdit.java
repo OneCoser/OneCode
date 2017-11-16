@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import chenhao.lib.onecode.R;
 import chenhao.lib.onecode.utils.StringUtils;
@@ -12,8 +11,8 @@ import chenhao.lib.onecode.utils.StringUtils;
 public class AlertEdit extends AlertBase {
 
     public interface OnAlertEditListener {
-        void initEditView(EditText et);
-
+        boolean initViewStyle(View root,EditText contentEdit,View line, View lineButton,
+                           FilletBtView leftButton, FilletBtView rightButton);
         boolean onSubmit(String s);
     }
 
@@ -47,18 +46,21 @@ public class AlertEdit extends AlertBase {
     public void createDialogInit(View layout, Dialog d) {
         super.createDialogInit(layout, d);
         editText = (EditText) layout.findViewById(R.id.alert_content);
+        View line = layout.findViewById(R.id.alert_line);
+        View lineButton = layout.findViewById(R.id.alert_bt_line);
+        FilletBtView leftButton = (FilletBtView) layout.findViewById(R.id.alert_bt_left);
+        FilletBtView rightButton = (FilletBtView) layout.findViewById(R.id.alert_bt_right);
         if (null != editListener) {
-            editListener.initEditView(editText);
+            editListener.initViewStyle(layout,editText,line,lineButton,leftButton,rightButton);
         }
         int btCount = 0;
         if (StringUtils.isEmpty(leftStr)) {
-            layout.findViewById(R.id.alert_bt_left).setVisibility(View.GONE);
+            leftButton.setVisibility(View.GONE);
         } else {
             btCount += 1;
-            layout.findViewById(R.id.alert_bt_left).setVisibility(View.VISIBLE);
-            ((Button) layout.findViewById(R.id.alert_bt_left)).setText(leftStr);
-            layout.findViewById(R.id.alert_bt_left)
-                    .setOnClickListener(new View.OnClickListener() {
+            leftButton.setVisibility(View.VISIBLE);
+            leftButton.setText(leftStr);
+            leftButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             if (submitLeft) {
                                 if (null == editListener || editListener.onSubmit(editText.getText().toString())) {
@@ -71,13 +73,12 @@ public class AlertEdit extends AlertBase {
                     });
         }
         if (StringUtils.isEmpty(rightStr)) {
-            layout.findViewById(R.id.alert_bt_right).setVisibility(View.GONE);
+            rightButton.setVisibility(View.GONE);
         } else {
             btCount += 1;
-            layout.findViewById(R.id.alert_bt_right).setVisibility(View.VISIBLE);
-            ((Button) layout.findViewById(R.id.alert_bt_right)).setText(rightStr);
-            layout.findViewById(R.id.alert_bt_right)
-                    .setOnClickListener(new View.OnClickListener() {
+            rightButton.setVisibility(View.VISIBLE);
+            rightButton.setText(rightStr);
+            rightButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             if (submitLeft) {
                                 close();
@@ -87,11 +88,7 @@ public class AlertEdit extends AlertBase {
                         }
                     });
         }
-        if (btCount == 2) {
-            layout.findViewById(R.id.alert_bt_line).setVisibility(View.VISIBLE);
-        } else {
-            layout.findViewById(R.id.alert_bt_line).setVisibility(View.GONE);
-        }
+        lineButton.setVisibility(btCount == 2 ? View.VISIBLE : View.GONE);
     }
 
 }

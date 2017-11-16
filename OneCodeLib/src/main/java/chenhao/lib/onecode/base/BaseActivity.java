@@ -141,16 +141,16 @@ public abstract class BaseActivity extends FragmentActivity {
                     system_status_icon.setImageResource(iconResId);
                     system_status_icon.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                     statusView=system_status_icon;
-                    statusView.setTag(status);
                 }
                 if (null!=statusView){
                     if (status!=SYSTEM_STATUS_LOADING){
+                        statusView.setTag(status);
                         statusView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 int s = SYSTEM_STATUS_NULL_DATA;
                                 try {
-                                    if (StringUtils.isNotEmpty(v.getTag().toString())) {
+                                    if (StringUtils.isNotEmpty(v.getTag())) {
                                         s = Integer.parseInt(v.getTag().toString());
                                     }
                                 } catch (Exception e) {
@@ -165,12 +165,6 @@ public abstract class BaseActivity extends FragmentActivity {
                 setVis(getSystemStatusLayout(), View.VISIBLE);
             }
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        UiUtil.init().closeBroads(this);
     }
 
     @Override
