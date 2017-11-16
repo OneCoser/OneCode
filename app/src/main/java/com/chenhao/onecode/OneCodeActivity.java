@@ -21,6 +21,7 @@ import chenhao.lib.onecode.video.VideoListActivity;
 import chenhao.lib.onecode.view.AlertEdit;
 import chenhao.lib.onecode.view.AlertItem;
 import chenhao.lib.onecode.view.AlertMsg;
+import chenhao.lib.onecode.view.FilletBtView;
 import chenhao.lib.onecode.view.TitleView;
 
 /**
@@ -116,11 +117,13 @@ public class OneCodeActivity extends RefreshBaseActivity<String>{
                         case 3:
                             new AlertEdit(OneCodeActivity.this, new AlertEdit.OnAlertEditListener() {
                                 @Override
-                                public void initEditView(EditText edit) {
-                                    edit.setInputType(InputType.TYPE_CLASS_NUMBER);
-                                    edit.setHint("请填写手机号");
-                                    edit.setMaxLines(1);
+                                public boolean initViewStyle(View root, EditText contentEdit, View line, View lineButton, FilletBtView leftButton, FilletBtView rightButton) {
+                                    contentEdit.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                    contentEdit.setHint("请填写手机号");
+                                    contentEdit.setMaxLines(1);
+                                    return true;
                                 }
+
                                 @Override
                                 public boolean onSubmit(String s) {
                                     if (StringUtils.isMobile(s)){
