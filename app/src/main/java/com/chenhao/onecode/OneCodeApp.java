@@ -3,6 +3,8 @@ package com.chenhao.onecode;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
+import android.os.StrictMode;
 import android.support.multidex.MultiDexApplication;
 import chenhao.lib.onecode.OneCode;
 
@@ -29,6 +31,14 @@ public class OneCodeApp extends MultiDexApplication {
         INSTANCE = this;
         if (getPackageName().equals(getCurProcessName(getApplicationContext()))) {
             OneCode.init(getApplicationContext(),new OneCodeAppConfig());
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    StrictMode.VmPolicy.Builder sBuilder = new StrictMode.VmPolicy.Builder();
+                    StrictMode.setVmPolicy(sBuilder.build());
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 

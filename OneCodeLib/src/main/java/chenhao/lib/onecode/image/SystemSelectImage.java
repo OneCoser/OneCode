@@ -125,8 +125,8 @@ public class SystemSelectImage extends BaseActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && null != data) {
-            if (requestCode == RECODE_SELECT_IMAGE){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == RECODE_SELECT_IMAGE&&null!=data){
                 String s=getSystemSelectImage(data);
                 if (info.needCrop&&StringUtils.isNotEmpty(s)){
                     AlbumListActivity.goCrop(this,s,info.cropWidth,info.cropHeight,info.cropIsFixed);
@@ -139,7 +139,7 @@ public class SystemSelectImage extends BaseActivity{
                 }else{
                     reImageSelect(selectImagePath);
                 }
-            }else if(requestCode == AlbumListActivity.RECODE_GET_PHOTO_CROP){
+            }else if(requestCode == AlbumListActivity.RECODE_GET_PHOTO_CROP&&null!=data){
                 reImageSelect(data.getStringExtra("data"));
             }
         }
