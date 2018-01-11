@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/system_select_image_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#33000000">
+
+    <chenhao.lib.onecode.view.FilletBtView
+        android:id="@+id/system_select_image_cacel"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="#333333"
+        android:textSize="16sp"
+        app:fillet="0dp"
+        app:filletColor="@android:color/white"
+        app:pressedColor="#eeeeee" />
+
+    <chenhao.lib.onecode.view.FilletBtView
+        android:id="@+id/system_select_image_list"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_above="@id/system_select_image_cacel"
+        android:layout_marginBottom="0.1dp"
+        android:gravity="center"
+        android:text="相册选择"
+        android:textColor="#333333"
+        android:textSize="16sp"
+        app:fillet="0dp"
+        app:filletColor="@android:color/white"
+        app:pressedColor="#eeeeee" />
+
+    <chenhao.lib.onecode.view.FilletBtView
+        android:id="@+id/system_select_image_camera"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_above="@id/system_select_image_list"
+        android:layout_marginBottom="0.1dp"
+        android:gravity="center"
+        android:text="拍照"
+        android:textColor="#333333"
+        android:textSize="16sp"
+        app:fillet="0dp"
+        app:filletColor="@android:color/white"
+        app:pressedColor="#eeeeee" />
+
+</RelativeLayout>

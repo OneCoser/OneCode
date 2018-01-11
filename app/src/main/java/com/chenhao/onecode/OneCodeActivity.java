@@ -14,6 +14,7 @@ import chenhao.lib.onecode.base.BaseViewHolder;
 import chenhao.lib.onecode.base.RefreshBaseActivity;
 import chenhao.lib.onecode.image.AlbumListActivity;
 import chenhao.lib.onecode.image.GetPhotoInfo;
+import chenhao.lib.onecode.image.SystemSelectImage;
 import chenhao.lib.onecode.utils.LayoutManagerUtil;
 import chenhao.lib.onecode.utils.StringUtils;
 import chenhao.lib.onecode.utils.UiUtil;
@@ -70,6 +71,7 @@ public class OneCodeActivity extends RefreshBaseActivity<String>{
                 data.add("编辑框");
                 data.add("选择框");
                 data.add("Pages");
+                data.add("系统封装选照片");
                 for (int i=1;i<LOAD_COUNT;i++){
                     data.add("Item"+i);
                 }
@@ -147,6 +149,9 @@ public class OneCodeActivity extends RefreshBaseActivity<String>{
                             break;
                         case 5:
                             startActivity(new Intent(OneCodeActivity.this,OneCodePagesActivity.class));
+                            break;
+                        case 6:
+                            SystemSelectImage.start(OneCodeActivity.this,GetPhotoInfo.getHeadInfo());
                             break;
                     }
                 }

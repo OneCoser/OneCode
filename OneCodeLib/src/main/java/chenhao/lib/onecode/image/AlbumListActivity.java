@@ -37,13 +37,17 @@ public class AlbumListActivity extends RefreshBaseActivity<ImageBucket> {
 
     public static final int RECODE_GET_PHOTO_CAMERA=17;
     public static void goCamera(Activity a, String imageName){
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File imageFile = new File(imageName);
-        imageFile.getParentFile().mkdirs();
-        cameraIntent.putExtra( MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile))
-                .putExtra("return-data", true)
-                .putExtra("autofocus", true);
-        a.startActivityForResult(cameraIntent, RECODE_GET_PHOTO_CAMERA);
+        try {
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            File imageFile = new File(imageName);
+            imageFile.getParentFile().mkdirs();
+            cameraIntent.putExtra( MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile))
+                    .putExtra("return-data", true)
+                    .putExtra("autofocus", true);
+            a.startActivityForResult(cameraIntent, RECODE_GET_PHOTO_CAMERA);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     public static final int RECODE_GET_PHOTO_CROP=18;
     public static void goCrop(Activity a, String path, int w, int h, boolean isFixed){

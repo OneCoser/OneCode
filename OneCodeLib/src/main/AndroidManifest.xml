@@ -95,16 +95,11 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <activity
-            android:name="chenhao.lib.onecode.video.SimlpVideoPlayActivity"
+            android:name="chenhao.lib.onecode.image.SystemSelectImage"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
-        <service
-            android:name="chenhao.lib.onecode.video.ijk.MediaPlayerService"
-            android:enabled="false"
-            android:exported="false" />
 
         <!--onecode相关配置-->
 
