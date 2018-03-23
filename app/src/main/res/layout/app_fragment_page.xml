@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <TextView
+    <chenhao.lib.onecode.view.FilletBtView
         android:id="@+id/page_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/app_name"
-        android:textColor="#333333"
-        android:textSize="20sp" />
+        android:layout_width="66dp"
+        android:layout_height="66dp"
+        android:gravity="center"
+        app:fillet="33dp"
+        app:filletColor="#3F51B5"
+        app:pressedColor="#3F51B5"
+        app:stroke="3dp"
+        app:strokeColor="@android:color/black" />
 
-</RelativeLayout>
+</LinearLayout>

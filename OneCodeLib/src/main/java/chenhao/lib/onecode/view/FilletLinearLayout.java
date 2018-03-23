@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
@@ -14,6 +13,7 @@ import chenhao.lib.onecode.R;
 
 public class FilletLinearLayout extends LinearLayout {
 
+    private Paint paint;
     private boolean isPress;
     private float fillet=5,stroke=0;
     private OnClickListener clickListener;
@@ -31,6 +31,7 @@ public class FilletLinearLayout extends LinearLayout {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
+        paint=new Paint();
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FilletStrokeView, defStyle, 0);
         fillet=a.getDimension(R.styleable.FilletStrokeView_fillet,fillet);
         stroke=a.getDimension(R.styleable.FilletStrokeView_stroke,stroke);
@@ -101,21 +102,7 @@ public class FilletLinearLayout extends LinearLayout {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Paint paint=new Paint();
-        paint.setAntiAlias(true);
-        if (isPress){
-            paint.setColor(pressedColor);
-        }else{
-            paint.setColor(filletColor);
-        }
-        paint.setStyle(Paint.Style.FILL);
-        canvas.drawRoundRect(new RectF(0,0,getWidth(),getHeight()),fillet,fillet,paint);
-        if (stroke>0){
-            paint.setStyle(Paint.Style.STROKE);
-            paint.setStrokeWidth(stroke);
-            paint.setColor(strokeColor);
-            canvas.drawRoundRect(new RectF(stroke/2,stroke/2,getWidth()-stroke,getHeight()-stroke),fillet,fillet,paint);
-        }
+        FilletBtView.drawFilletView(paint,canvas,getWidth(),getHeight(),fillet,stroke,isPress,filletColor,pressedColor,strokeColor);
         super.onDraw(canvas);
     }
 

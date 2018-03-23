@@ -9,12 +9,12 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.TextView;
-
 import chenhao.lib.onecode.R;
 
 
 public class FilletBtView extends TextView {
 
+    private Paint paint;
     private boolean isPress;
     private float fillet=5,stroke=0;
     private OnClickListener clickListener;
@@ -37,6 +37,7 @@ public class FilletBtView extends TextView {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
+        paint=new Paint();
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FilletStrokeView, defStyle, 0);
         fillet=a.getDimension(R.styleable.FilletStrokeView_fillet,fillet);
         stroke=a.getDimension(R.styleable.FilletStrokeView_stroke,stroke);
@@ -45,7 +46,6 @@ public class FilletBtView extends TextView {
         strokeColor=a.getColor(R.styleable.FilletStrokeView_strokeColor, filletColor);
         a.recycle();
         this.setBackgroundColor(Color.TRANSPARENT);
-//        this.setGravity(Gravity.CENTER);
     }
 
     public void setBgColor(int dColor,int pColor){
@@ -109,22 +109,33 @@ public class FilletBtView extends TextView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Paint paint=new Paint();
-        paint.setAntiAlias(true);
-        if (isPress){
-            paint.setColor(pressedColor);
-        }else{
-            paint.setColor(filletColor);
-        }
-        paint.setStyle(Paint.Style.FILL);
-        canvas.drawRoundRect(new RectF(0,0,getWidth(),getHeight()),fillet,fillet,paint);
-        if (stroke>0){
-            paint.setStyle(Paint.Style.STROKE);
-            paint.setStrokeWidth(stroke);
-            paint.setColor(strokeColor);
-            canvas.drawRoundRect(new RectF(stroke/2,stroke/2,getWidth()-stroke,getHeight()-stroke),fillet,fillet,paint);
-        }
+        drawFilletView(paint,canvas,getWidth(),getHeight(),fillet,stroke,isPress,filletColor,pressedColor,strokeColor);
         super.onDraw(canvas);
+    }
+
+    public static void drawFilletView(Paint paint,Canvas canvas,int width,int height,float fillet,float stroke,
+                                      boolean isPress,int filletColor,int pressedColor,int strokeColor){
+        if (null!=paint&&null!=canvas&&width>0&&height>0){
+            try {
+                paint.setAntiAlias(true);
+                if (isPress){
+                    paint.setColor(pressedColor);
+                }else{
+                    paint.setColor(filletColor);
+                }
+                paint.setStyle(Paint.Style.FILL);
+                canvas.drawRoundRect(new RectF(0,0,width,height),fillet,fillet,paint);
+                if (stroke>0){
+                    paint.setStyle(Paint.Style.STROKE);
+                    paint.setStrokeWidth(stroke);
+                    paint.setColor(strokeColor);
+                    float sh=stroke/2;
+                    canvas.drawRoundRect(new RectF(sh,sh,width-sh,height-sh),fillet,fillet,paint);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
 }

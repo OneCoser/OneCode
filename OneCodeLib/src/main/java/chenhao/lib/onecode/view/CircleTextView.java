@@ -12,6 +12,7 @@ public class CircleTextView extends TextView {
 
     private int filletColor= Color.BLACK,strokeColor= Color.TRANSPARENT;
     private float stroke=0;
+    private Paint paint;
 
     public CircleTextView(Context context) {
         super(context);
@@ -29,6 +30,7 @@ public class CircleTextView extends TextView {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
+        paint=new Paint();
         TypedArray a = getContext().obtainStyledAttributes(attrs, chenhao.lib.onecode.R.styleable.FilletStrokeView, defStyle, 0);
         stroke=a.getDimension(chenhao.lib.onecode.R.styleable.FilletStrokeView_stroke,stroke);
         strokeColor=a.getColor(chenhao.lib.onecode.R.styleable.FilletStrokeView_strokeColor, Color.BLACK);
@@ -55,7 +57,6 @@ public class CircleTextView extends TextView {
         int helfW=getWidth()/2;
         int helfH=getHeight()/2;
         int max= Math.max(helfW,helfH);
-        Paint paint=new Paint();
         paint.setAntiAlias(true);
         if (stroke>0){
             paint.setStyle(Paint.Style.STROKE);

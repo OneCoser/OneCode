@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import chenhao.lib.onecode.base.BaseFragment;
+import chenhao.lib.onecode.view.FilletBtView;
 
 /**
  * 所属项目：OneCode
@@ -20,7 +21,7 @@ import chenhao.lib.onecode.base.BaseFragment;
 public class PageItemFragment extends BaseFragment {
 
     @BindView(R.id.page_name)
-    TextView pageName;
+    FilletBtView pageName;
 
     @Override
     protected View getContentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
