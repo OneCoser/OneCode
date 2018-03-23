@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="#eeeeee"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -16,6 +16,6 @@
         app:filletColor="#3F51B5"
         app:pressedColor="#3F51B5"
         app:stroke="3dp"
-        app:strokeColor="@android:color/black" />
+        app:strokeColor="#ffffff" />
 
 </LinearLayout>

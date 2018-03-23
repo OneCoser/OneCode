@@ -130,7 +130,7 @@ public class FilletBtView extends TextView {
                     paint.setStrokeWidth(stroke);
                     paint.setColor(strokeColor);
                     float sh=stroke/2;
-                    canvas.drawRoundRect(new RectF(sh,sh,width-sh,height-sh),fillet,fillet,paint);
+                    canvas.drawRoundRect(new RectF(sh-0.5f,sh-0.5f,width-sh+1,height-sh+1),fillet,fillet,paint);
                 }
             }catch (Exception e){
                 e.printStackTrace();
