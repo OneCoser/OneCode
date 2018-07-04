@@ -8,9 +8,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
+
 import java.io.File;
+
 import chenhao.lib.onecode.OneCode;
 import chenhao.lib.onecode.R;
 import chenhao.lib.onecode.base.BaseActivity;
@@ -27,13 +30,14 @@ import chenhao.lib.onecode.view.FilletBtView;
  * 描述：调用系统默认方式选择图片
  */
 
-public class SystemSelectImage extends BaseActivity{
+public class SystemSelectImage extends BaseActivity {
 
-    private static final int RECODE_OPEN_CAMERA=19;
-    public static final int RECODE_SELECT_IMAGE=20;
-    public static void start(Activity a,GetPhotoInfo info){
-        Intent intent=new Intent(a,SystemSelectImage.class);
-        intent.putExtra("info",info);
+    private static final int RECODE_OPEN_CAMERA = 19;
+    public static final int RECODE_SELECT_IMAGE = 20;
+
+    public static void start(Activity a, GetPhotoInfo info) {
+        Intent intent = new Intent(a, SystemSelectImage.class);
+        intent.putExtra("info", info);
         a.startActivityForResult(intent, RECODE_SELECT_IMAGE);
     }
 
@@ -43,81 +47,86 @@ public class SystemSelectImage extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        info=getIntent().getParcelableExtra("info");
-        if (null==info){
-            info=GetPhotoInfo.getDefualtInfo();
+        info = getIntent().getParcelableExtra("info");
+        if (null == info) {
+            info = GetPhotoInfo.getDefualtInfo();
         }
         setContentView(R.layout.onecode_activity_system_select_image);
-        FilletBtView selectCancel=findV(R.id.system_select_image_cacel);
-        FilletBtView selectList=findV(R.id.system_select_image_list);
-        FilletBtView selectCamera=findV(R.id.system_select_image_camera);
+        FilletBtView selectCancel = findV(R.id.system_select_image_cacel);
+        FilletBtView selectList = findV(R.id.system_select_image_list);
+        FilletBtView selectCamera = findV(R.id.system_select_image_camera);
         selectCancel.setOnClickListener(onClickListener);
         selectList.setOnClickListener(onClickListener);
         selectCamera.setOnClickListener(onClickListener);
-        setVis(selectCamera,info.canCamera);
-        setVis(selectList,selectCamera.getVisibility());
-        setVis(selectCancel,selectCamera.getVisibility());
-        if (info.onlyCamera){
+
+        selectCamera.setText(StringUtils.isNotEmpty(info.takePhotoStr) ? info.takePhotoStr : "拍照");
+        selectList.setText(StringUtils.isNotEmpty(info.selectPhotoStr) ? info.selectPhotoStr : "相册选择");
+        selectCancel.setText(StringUtils.isNotEmpty(info.cancelStr) ? info.cancelStr : "取消");
+
+        setVis(selectCamera, info.canCamera);
+        setVis(selectList, selectCamera.getVisibility());
+        setVis(selectCancel, selectCamera.getVisibility());
+        if (info.onlyCamera) {
             openCamera();
-        }else if (!info.canCamera){
+        } else if (!info.canCamera) {
             openSystemSelect();
         }
     }
 
-    private View.OnClickListener onClickListener=new View.OnClickListener() {
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (v.getId()==R.id.system_select_image_cacel){
+            if (v.getId() == R.id.system_select_image_cacel) {
                 finish();
-            }else if(v.getId()==R.id.system_select_image_list){
+            } else if (v.getId() == R.id.system_select_image_list) {
                 openSystemSelect();
-            }else if(v.getId()==R.id.system_select_image_camera){
+            } else if (v.getId() == R.id.system_select_image_camera) {
                 openCamera();
             }
         }
     };
 
-    private void openSystemSelect(){
+    private void openSystemSelect() {
         try {
-            Intent intent=new Intent();
+            Intent intent = new Intent();
             intent.setAction(Intent.ACTION_PICK);
             intent.setType("image/*");
             startActivityForResult(intent, RECODE_SELECT_IMAGE);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void openCamera(){
-        if (null!= OneCode.getConfig()){
+    private void openCamera() {
+        if (null != OneCode.getConfig()) {
             try {
                 selectImagePath = OneCode.getConfig().getCachePath() + System.currentTimeMillis() + ".jpg";
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 File imageFile = new File(selectImagePath);
                 imageFile.getParentFile().mkdirs();
-                cameraIntent.putExtra( MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile))
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile))
                         .putExtra("return-data", true)
                         .putExtra("autofocus", true);
                 startActivityForResult(cameraIntent, RECODE_OPEN_CAMERA);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private String getSystemSelectImage(Intent data){
-        String s="";
-        if (null!=data){
+    private String getSystemSelectImage(Intent data) {
+        String s = "";
+        if (null != data) {
             try {
                 Uri selectedImage = data.getData(); //获取系统返回的照片的Uri
-                selectedImage=getXMUri(data,selectedImage);
-                String[] filePathColumn = { MediaStore.Images.Media.DATA };
-                Cursor cursor =getContentResolver().query(selectedImage,
+                selectedImage = getXMUri(data, selectedImage);
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Cursor cursor = getContentResolver().query(selectedImage,
                         filePathColumn, null, null, null);//从系统表中查询指定Uri对应的照片
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 s = cursor.getString(columnIndex);  //获取照片路径
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -125,8 +134,8 @@ public class SystemSelectImage extends BaseActivity{
     }
 
     //解决小米手机上获取图片路径为null的情况
-    public Uri getXMUri(Intent intent,Uri def) {
-        if (null==intent){
+    public Uri getXMUri(Intent intent, Uri def) {
+        if (null == intent) {
             return def;
         }
         try {
@@ -141,7 +150,7 @@ public class SystemSelectImage extends BaseActivity{
                     buff.append("(").append(MediaStore.Images.ImageColumns.DATA).append("=")
                             .append("'" + path + "'").append(")");
                     Cursor cur = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                            new String[] { MediaStore.Images.ImageColumns._ID },
+                            new String[]{MediaStore.Images.ImageColumns._ID},
                             buff.toString(), null, null);
                     int index = 0;
                     for (cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
@@ -160,7 +169,7 @@ public class SystemSelectImage extends BaseActivity{
                 }
             }
             return uri;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return def;
         }
@@ -170,58 +179,58 @@ public class SystemSelectImage extends BaseActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == RECODE_SELECT_IMAGE&&null!=data){
-                String s=getSystemSelectImage(data);
-                if (info.needCrop&&StringUtils.isNotEmpty(s)){
-                    AlbumListActivity.goCrop(this,s,info.cropWidth,info.cropHeight,info.cropIsFixed);
-                }else{
+            if (requestCode == RECODE_SELECT_IMAGE && null != data) {
+                String s = getSystemSelectImage(data);
+                if (info.needCrop && StringUtils.isNotEmpty(s)) {
+                    AlbumListActivity.goCrop(this, s, info.cropWidth, info.cropHeight, info.cropIsFixed);
+                } else {
                     reImageSelect(s);
                 }
-            }else if(requestCode == RECODE_OPEN_CAMERA){
-                if (info.needCrop){
-                    AlbumListActivity.goCrop(this,selectImagePath,info.cropWidth,info.cropHeight,info.cropIsFixed);
-                }else{
+            } else if (requestCode == RECODE_OPEN_CAMERA) {
+                if (info.needCrop) {
+                    AlbumListActivity.goCrop(this, selectImagePath, info.cropWidth, info.cropHeight, info.cropIsFixed);
+                } else {
                     reImageSelect(selectImagePath);
                 }
-            }else if(requestCode == AlbumListActivity.RECODE_GET_PHOTO_CROP&&null!=data){
+            } else if (requestCode == AlbumListActivity.RECODE_GET_PHOTO_CROP && null != data) {
                 reImageSelect(data.getStringExtra("data"));
             }
         }
     }
 
-    private void reImageSelect(String image){
-        if (StringUtils.isNotEmpty(image)){
-            selectImagePath=image;
-            UiUtil.init().showDialog(this,false);
+    private void reImageSelect(String image) {
+        if (StringUtils.isNotEmpty(image)) {
+            selectImagePath = image;
+            UiUtil.init().showDialog(this, false);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    String str="";
+                    String str = "";
                     try {
-                        str=new ReSizeImage(selectImagePath).launch();
-                    }catch (Exception e){
+                        str = new ReSizeImage(selectImagePath).launch();
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    if (StringUtils.isEmpty(str)){
-                        str=selectImagePath;
+                    if (StringUtils.isEmpty(str)) {
+                        str = selectImagePath;
                     }
-                    EventBus.getDefault().post(str,"system_select_resize_success");
+                    EventBus.getDefault().post(str, "system_select_resize_success");
                 }
             }).start();
-        }else{
+        } else {
             finish();
         }
     }
 
     @Subscriber(tag = "system_select_resize_success")
-    public void eventSelect(String image){
-        if (null!=OneCode.getConfig()){
+    public void eventSelect(String image) {
+        if (null != OneCode.getConfig()) {
             Intent scanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             scanIntent.setData(Uri.fromFile(new File(OneCode.getConfig().getCachePath())));
             sendBroadcast(scanIntent);
         }
         UiUtil.init().cancelDialog();
-        setResult(RESULT_OK, new Intent().putExtra("data",image));
+        setResult(RESULT_OK, new Intent().putExtra("data", image));
         finish();
     }
 

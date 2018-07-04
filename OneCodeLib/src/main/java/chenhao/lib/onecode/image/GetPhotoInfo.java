@@ -23,6 +23,9 @@ public class GetPhotoInfo implements Parcelable {
     public int cropWidth;
     public int cropHeight;
     public boolean cropIsFixed;
+    public String takePhotoStr;
+    public String selectPhotoStr;
+    public String cancelStr;
 
     public static GetPhotoInfo getDefualtInfo(){
         GetPhotoInfo info=new GetPhotoInfo();
@@ -82,6 +85,9 @@ public class GetPhotoInfo implements Parcelable {
         dest.writeInt(this.cropWidth);
         dest.writeInt(this.cropHeight);
         dest.writeByte(this.cropIsFixed ? (byte) 1 : (byte) 0);
+        dest.writeString(this.takePhotoStr);
+        dest.writeString(this.selectPhotoStr);
+        dest.writeString(this.cancelStr);
     }
 
     public GetPhotoInfo() {
@@ -97,9 +103,12 @@ public class GetPhotoInfo implements Parcelable {
         this.cropWidth = in.readInt();
         this.cropHeight = in.readInt();
         this.cropIsFixed = in.readByte() != 0;
+        this.takePhotoStr = in.readString();
+        this.selectPhotoStr = in.readString();
+        this.cancelStr = in.readString();
     }
 
-    public static final Parcelable.Creator<GetPhotoInfo> CREATOR = new Parcelable.Creator<GetPhotoInfo>() {
+    public static final Creator<GetPhotoInfo> CREATOR = new Creator<GetPhotoInfo>() {
         @Override
         public GetPhotoInfo createFromParcel(Parcel source) {
             return new GetPhotoInfo(source);
