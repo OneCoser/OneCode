@@ -19,31 +19,33 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import chenhao.lib.onecode.OneCode;
 import chenhao.lib.onecode.R;
+
 import java.util.List;
 
 public class UiUtil {
-
+    
     private static UiUtil self;
-
+    
     public static UiUtil init() {
         if (null == self) {
             self = new UiUtil();
         }
         return self;
     }
-
+    
     private Dialog dialog;
-
+    
     public void showDialog(Context context, boolean canCelable) {
         cancelDialog();
         try {
             if (null != context) {
                 dialog = new Dialog(context, R.style.CustomProgressDialog);
-                if (null!=OneCode.getConfig()&&OneCode.getConfig().getDialogResId()!=0){
+                if (null != OneCode.getConfig() && OneCode.getConfig().getDialogResId() != 0) {
                     dialog.setContentView(OneCode.getConfig().getDialogResId());
-                }else{
+                } else {
                     dialog.setContentView(R.layout.onecode_loading_dialog);
                 }
                 dialog.getWindow().getAttributes().gravity = Gravity.CENTER;
@@ -61,7 +63,7 @@ public class UiUtil {
             e.printStackTrace();
         }
     }
-
+    
     public void cancelDialog() {
         try {
             if (null != dialog && dialog.isShowing()) {
@@ -75,25 +77,28 @@ public class UiUtil {
             e.printStackTrace();
         }
     }
-
+    
     public void toast(String msg) {
-        toast(OneCode.getContext(),msg);
+        toast(OneCode.getContext(), msg);
     }
+    
     public void toast(Context context, int resId) {
         toast(context, context.getString(resId));
     }
+    
     public void toast(Context context, String msg) {
         try {
-            if (StringUtils.isNotEmpty(msg)){
+            if (StringUtils.isNotEmpty(msg)) {
                 Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.setText(msg);
                 toast.show();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
+    
     public void closeBroads(Activity context) {
         try {
             if (null != context) {
@@ -107,7 +112,7 @@ public class UiUtil {
             e.printStackTrace();
         }
     }
-
+    
     public void closeBroads(Context context, View view) {
         try {
             if (null != context && null != view) {
@@ -118,7 +123,7 @@ public class UiUtil {
             e.printStackTrace();
         }
     }
-
+    
     public void showKeyboard(Activity context, TextView view) {
         try {
             if (null != context && null != view) {
@@ -129,7 +134,7 @@ public class UiUtil {
             e.printStackTrace();
         }
     }
-
+    
     public <T extends View> T findV(View parent, int id) {
         if (null != parent && null != parent.findViewById(id)) {
             try {
@@ -140,7 +145,7 @@ public class UiUtil {
         }
         return null;
     }
-
+    
     public <T extends View> T findV(Activity activity, int id) {
         if (null != activity && null != activity.findViewById(id)) {
             try {
@@ -151,7 +156,7 @@ public class UiUtil {
         }
         return null;
     }
-
+    
     public PackageInfo getAppInfo(Context context, String packageName) {
         PackageInfo info = null;
         if (null != context && StringUtils.isNotEmpty(packageName)) {
@@ -166,13 +171,13 @@ public class UiUtil {
         }
         return info;
     }
-
+    
     public static final int NET_INVALID = 0;
     public static final int NET_WAP = 1;
     public static final int NET_2G = 2;
     public static final int NET_34G = 3;
     public static final int NET_WIFI = 4;
-
+    
     private boolean isFastMobileNetwork(Context context) {
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         switch (telephonyManager.getNetworkType()) {
@@ -212,47 +217,47 @@ public class UiUtil {
                 return false;
         }
     }
-
+    
     public int netType(Context context) {
-        int nt=NET_INVALID;
+        int nt = NET_INVALID;
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             int type = networkInfo.getType();
-            if (type== ConnectivityManager.TYPE_WIFI) {
+            if (type == ConnectivityManager.TYPE_WIFI) {
                 nt = NET_WIFI;
-            } else if (type== ConnectivityManager.TYPE_MOBILE) {
+            } else if (type == ConnectivityManager.TYPE_MOBILE) {
                 String proxyHost = android.net.Proxy.getDefaultHost();
-                nt = StringUtils.isEmpty(proxyHost)? (isFastMobileNetwork(context) ? NET_34G : NET_2G): NET_WAP;
+                nt = StringUtils.isEmpty(proxyHost) ? (isFastMobileNetwork(context) ? NET_34G : NET_2G) : NET_WAP;
             }
         }
         return nt;
     }
-
-    public boolean netIsMobile(Context context){
-        int type=netType(context);
-        return type==NET_WAP||type==NET_2G||type==NET_34G;
+    
+    public boolean netIsMobile(Context context) {
+        int type = netType(context);
+        return type == NET_WAP || type == NET_2G || type == NET_34G;
     }
-
-    public boolean netIsWifi(Context context){
-        return netType(context)==NET_WIFI;
+    
+    public boolean netIsWifi(Context context) {
+        return netType(context) == NET_WIFI;
     }
-
-    public boolean netIsInvalid(Context context){
-        return netType(context)==NET_INVALID;
+    
+    public boolean netIsInvalid(Context context) {
+        return netType(context) == NET_INVALID;
     }
-
+    
     public static void vibrate(Activity activity, long milliseconds) {
         Vibrator vib = (Vibrator) activity.getSystemService(Service.VIBRATOR_SERVICE);
         vib.vibrate(milliseconds);
     }
-
+    
     public static void vibrate(Activity activity, long[] pattern, boolean isRepeat) {
         Vibrator vib = (Vibrator) activity.getSystemService(Service.VIBRATOR_SERVICE);
         vib.vibrate(pattern, isRepeat ? 1 : -1);
     }
-
-
+    
+    
     public void setWindowStatusBarColor(Activity activity, int color) {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -266,5 +271,5 @@ public class UiUtil {
             e.printStackTrace();
         }
     }
-
+    
 }
