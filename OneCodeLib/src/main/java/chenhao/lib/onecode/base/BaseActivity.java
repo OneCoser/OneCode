@@ -1,6 +1,5 @@
 package chenhao.lib.onecode.base;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -24,16 +23,20 @@ import chenhao.lib.onecode.view.AlertMsg;
 
 public abstract class BaseActivity extends FragmentActivity {
     
-    public float dp;
-    public int screenW, screenH;
-    public Unbinder unbinder;
+    protected float dp;
+    protected int screenW, screenH;
+    protected Unbinder unbinder;
     
     public abstract String getPageName();
     
     protected abstract void systemStatusAction(int status);
     
-    public int getStatusBarColor() {
+    protected int getStatusBarColor() {
         return -1;
+    }
+    
+    protected boolean statusBarIsLightMode() {
+        return false;
     }
     
     @Override
@@ -43,25 +46,14 @@ public abstract class BaseActivity extends FragmentActivity {
         screenH = getResources().getDisplayMetrics().heightPixels;
         super.onCreate(savedInstanceState);
         EventBus.getDefault().registerSticky(this);
-        ActivityTask.init().addTask(this);
-        try {
-            if (null != getActionBar()) {
-                getActionBar().hide();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         UiUtil.init().closeBroads(this);
+        ActivityTask.init().addTask(this);
         if (getStatusBarColor() != -1) {
             BarUtils.setStatusBarColor(this, getStatusBarColor());
-            BarUtils.setStatusBarLightMode(this, true);
-        } else {
-            int color = Color.BLACK;
-            if (null != OneCode.getConfig() && OneCode.getConfig().getDefaultStatusBarColor(this) != 0) {
-                color = OneCode.getConfig().getDefaultStatusBarColor(this);
-            }
-            UiUtil.init().setWindowStatusBarColor(this, color);
+        } else if (null != OneCode.getConfig() && OneCode.getConfig().getDefaultStatusBarColor(this) != -1) {
+            UiUtil.init().setWindowStatusBarColor(this, OneCode.getConfig().getDefaultStatusBarColor(this));
         }
+        BarUtils.setStatusBarLightMode(this, statusBarIsLightMode());
         if (!OneCode.projectOK()) {
             new AlertMsg(this, new AlertMsg.OnAlertMsgListener() {
                 @Override
