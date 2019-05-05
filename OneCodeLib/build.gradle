@@ -10,12 +10,12 @@ repositories {
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 24
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -32,16 +32,17 @@ android {
 
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:24.2.0'
-    compile 'com.android.support:recyclerview-v7:24.2.0'
-    compile 'com.alibaba:fastjson:1.1.55.android'
-    compile 'com.mcxiaoke.volley:library:1.0.+'
-    compile 'com.facebook.fresco:fresco:0.9.0+'
-    compile 'org.simple:androideventbus:1.0.5'
-    compile 'com.jakewharton:butterknife:8.8.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.alibaba:fastjson:1.2.48'
+    implementation 'com.mcxiaoke.volley:library:1.0.+'
+    implementation 'com.facebook.fresco:fresco:0.9.0+'
+    implementation 'org.simple:androideventbus:1.0.5'
+    implementation 'com.jakewharton:butterknife:8.8.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.0'
-    compile 'com.commit451:PhotoView:1.2.4'
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
-    compile 'com.android.support:multidex:1.0.1'
+    implementation 'com.commit451:PhotoView:1.2.4'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+    implementation 'com.android.support:multidex:1.0.3'
 }

@@ -1,14 +1,17 @@
 package com.chenhao.onecode;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
 import chenhao.lib.onecode.base.BaseViewHolder;
 import chenhao.lib.onecode.base.RefreshBaseActivity;
@@ -34,37 +37,37 @@ import chenhao.lib.onecode.view.TitleView;
  * 描述：OneCodeActivity
  */
 
-public class OneCodeActivity extends RefreshBaseActivity<String>{
-
+public class OneCodeActivity extends RefreshBaseActivity<String> {
+    
     @Override
     public RecyclerView.LayoutManager getLayoutManager() {
         return LayoutManagerUtil.getList(this);
     }
-
+    
     @BindView(R.id.title_view)
     TitleView titleView;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        titleView.setTextIcon("框架代码演示","","",R.drawable.onecode_icon_back_w,0);
-        titleView.setShow(TitleView.SHOW_ICON,TitleView.SHOW_NONE);
+        titleView.setTextIcon("框架代码演示", "", "", R.drawable.onecode_icon_back_w, 0);
+        titleView.setShow(TitleView.SHOW_ICON, TitleView.SHOW_NONE);
         titleView.setOnTitleViewAction(new TitleView.OnTitleViewAction() {
             @Override
             public void onAction(int action) {
                 onBackPressed();
             }
         });
-        loadData(false,false);
+        loadData(false, false);
     }
-
+    
     @Override
     public void loadData(boolean getMore, boolean isUser) {
         super.loadData(getMore, isUser);
         getRefreshView().postDelayed(new Runnable() {
             @Override
             public void run() {
-                List<String> data=new ArrayList<String>();
+                List<String> data = new ArrayList<String>();
                 data.add("选照片");
                 data.add("选视频");
                 data.add("提示框");
@@ -72,33 +75,33 @@ public class OneCodeActivity extends RefreshBaseActivity<String>{
                 data.add("选择框");
                 data.add("Pages");
                 data.add("系统封装选照片");
-                for (int i=1;i<LOAD_COUNT;i++){
-                    data.add("Item"+i);
+                for (int i = 1; i < LOAD_COUNT; i++) {
+                    data.add("Item" + i);
                 }
-                onDataSuccess(data,SYSTEM_STATUS_NULL_DATA);
+                onDataSuccess(data, SYSTEM_STATUS_NULL_DATA);
             }
-        },3000);
+        }, 3000);
     }
-
+    
     @Override
     protected BaseViewHolder<String> getItem(int viewType) {
         return new ItemTest();
     }
-
-    public class ItemTest extends BaseViewHolder<String>{
-
+    
+    public class ItemTest extends BaseViewHolder<String> {
+        
         @BindView(R.id.test_item)
         TextView item;
-
+        
         private int index;
-
+        
         public ItemTest() {
-            super(View.inflate(OneCodeActivity.this, R.layout.app_item_test,null));
-            itemView.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,RecyclerView.LayoutParams.WRAP_CONTENT));
+            super(View.inflate(OneCodeActivity.this, R.layout.app_item_test, null));
+            itemView.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    switch (index){
+                    switch (index) {
                         case 0:
                             AlbumListActivity.goGetPhoto(OneCodeActivity.this, GetPhotoInfo.getDefualtInfo());
                             break;
@@ -109,12 +112,12 @@ public class OneCodeActivity extends RefreshBaseActivity<String>{
                             new AlertMsg(OneCodeActivity.this, new AlertMsg.OnAlertMsgListener() {
                                 @Override
                                 public boolean onClick(boolean isLeft) {
-                                    if (isLeft){
+                                    if (isLeft) {
                                         UiUtil.init().toast("是");
                                     }
                                     return true;
                                 }
-                            }).setMsg("你是不是傻逼？","你说呢？","滚").createShow();
+                            }).setMsg("你是不是傻逼？", "你说呢？", "滚").createShow();
                             break;
                         case 3:
                             new AlertEdit(OneCodeActivity.this, new AlertEdit.OnAlertEditListener() {
@@ -125,18 +128,18 @@ public class OneCodeActivity extends RefreshBaseActivity<String>{
                                     contentEdit.setMaxLines(1);
                                     return true;
                                 }
-
+                                
                                 @Override
                                 public boolean onSubmit(String s) {
-                                    if (StringUtils.isMobile(s)){
+                                    if (StringUtils.isMobile(s)) {
                                         UiUtil.init().toast(s);
                                         return true;
-                                    }else{
+                                    } else {
                                         UiUtil.init().toast("请输入正确手机号");
                                         return false;
                                     }
                                 }
-                            }).setButton(true,"提交","取消").createShow();
+                            }).setButton(true, "提交", "取消").createShow();
                             break;
                         case 4:
                             new AlertItem(OneCodeActivity.this, new AlertItem.OnAlertItemListener() {
@@ -145,26 +148,26 @@ public class OneCodeActivity extends RefreshBaseActivity<String>{
                                     UiUtil.init().toast(s);
                                     return true;
                                 }
-                            }).setItems(new String[]{"哈哈","呵呵","嘿嘿","啪啪"}).createShow();
+                            }).setItems(new String[]{"哈哈", "呵呵", "嘿嘿", "啪啪"}).createShow();
                             break;
                         case 5:
-                            startActivity(new Intent(OneCodeActivity.this,OneCodePagesActivity.class));
+                            startActivity(new Intent(OneCodeActivity.this, OneCodePagesActivity.class));
                             break;
                         case 6:
-                            SystemSelectImage.start(OneCodeActivity.this,GetPhotoInfo.getHeadInfo());
+                            SystemSelectImage.start(OneCodeActivity.this, GetPhotoInfo.getHeadInfo());
                             break;
                     }
                 }
             });
         }
-
+        
         @Override
         public void initView(String s, int position) {
-            this.index=position;
+            this.index = position;
             item.setText(s);
         }
     }
-
+    
     @Override
     public String getPageName() {
         return "onecode";

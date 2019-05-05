@@ -62,6 +62,10 @@
         android:allowBackup="true"
         android:supportsRtl="true">
 
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
         <!--onecode相关配置-->
         <activity
             android:name="chenhao.lib.onecode.image.AlbumListActivity"
