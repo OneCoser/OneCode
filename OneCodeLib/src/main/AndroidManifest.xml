@@ -1,62 +1,62 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="chenhao.lib.onecode">
 
-    <!-- 录制声音通过手机或耳机的麦克 -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!-- 读取系统底层日志 -->
-    <uses-permission android:name="android.permission.READ_LOGS" />
-    <!-- 获取网络信息状态，如当前的网络连接是否有效 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- 获取当前WiFi接入的状态以及WLAN热点的信息 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- 允许程序改变网络连接状态 -->
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <!-- 允许改变WiFi状态 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <!-- 允许应用程序联网，可能产生GPRS流量 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 允许程序写入外部存储，如SD卡上写文件，缓存资源优先存入SDcard -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- 挂载、反挂载外部文件系统 -->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <!-- 允许振动 -->
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.hardware.sensor.accelerometer" />
-    <!-- 允许程序获取当前或最近运行的应用  推送通知时，判断程序是否在前台使用 -->
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <!-- 控制是否需要屏幕待机 -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- 杀进程权限 -->
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-    <!-- 允许程序开机自动运行 -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-    <!-- 获取用户手机的IMEI，用来唯一的标识用户。  -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- 这个权限用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- 这个权限用于访问GPS定位-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- 允许程序访问额外的定位提供者指令-->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <!-- 浮动通知权限 -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <!-- 相机权限 -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!-- 读取联系人权限 -->
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <!-- 拨打电话权限 -->
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <!-- 发送短信权限 -->
-    <uses-permission android:name="android.permission.SEND_SMS" />
-    <!-- 更改系统设置权限 -->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <!-- 读取系统设置权限 -->
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <!-- 蓝牙权限 -->
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
+    <!--    &lt;!&ndash; 录制声音通过手机或耳机的麦克 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.RECORD_AUDIO" />-->
+    <!--    &lt;!&ndash; 读取系统底层日志 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.READ_LOGS" />-->
+    <!--    &lt;!&ndash; 获取网络信息状态，如当前的网络连接是否有效 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
+    <!--    &lt;!&ndash; 获取当前WiFi接入的状态以及WLAN热点的信息 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />-->
+    <!--    &lt;!&ndash; 允许程序改变网络连接状态 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />-->
+    <!--    &lt;!&ndash; 允许改变WiFi状态 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />-->
+    <!--    &lt;!&ndash; 允许应用程序联网，可能产生GPRS流量 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.INTERNET" />-->
+    <!--    &lt;!&ndash; 允许程序写入外部存储，如SD卡上写文件，缓存资源优先存入SDcard &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+    <!--    &lt;!&ndash; 挂载、反挂载外部文件系统 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />-->
+    <!--    &lt;!&ndash; 允许振动 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.VIBRATE" />-->
+    <!--    <uses-permission android:name="android.hardware.sensor.accelerometer" />-->
+    <!--    &lt;!&ndash; 允许程序获取当前或最近运行的应用  推送通知时，判断程序是否在前台使用 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.GET_TASKS" />-->
+    <!--    &lt;!&ndash; 控制是否需要屏幕待机 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.WAKE_LOCK" />-->
+    <!--    &lt;!&ndash; 杀进程权限 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />-->
+    <!--    &lt;!&ndash; 允许程序开机自动运行 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />-->
+    <!--    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />-->
+    <!--    &lt;!&ndash; 获取用户手机的IMEI，用来唯一的标识用户。  &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
+    <!--    &lt;!&ndash; 这个权限用于进行网络定位&ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
+    <!--    &lt;!&ndash; 这个权限用于访问GPS定位&ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
+    <!--    &lt;!&ndash; 允许程序访问额外的定位提供者指令&ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />-->
+    <!--    &lt;!&ndash; 浮动通知权限 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />-->
+    <!--    &lt;!&ndash; 相机权限 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.CAMERA" />-->
+    <!--    &lt;!&ndash; 读取联系人权限 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.READ_CONTACTS" />-->
+    <!--    &lt;!&ndash; 拨打电话权限 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.CALL_PHONE" />-->
+    <!--    &lt;!&ndash; 发送短信权限 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.SEND_SMS" />-->
+    <!--    &lt;!&ndash; 更改系统设置权限 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.WRITE_SETTINGS" />-->
+    <!--    &lt;!&ndash; 读取系统设置权限 &ndash;&gt;-->
+    <!--    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />-->
+    <!--    &lt;!&ndash; 蓝牙权限 &ndash;&gt;-->
+    <!--    <uses-permission android:name="android.permission.BLUETOOTH" />-->
+    <!--    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />-->
+    <!--    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />-->
 
     <application
         android:allowBackup="true"
